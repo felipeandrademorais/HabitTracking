@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		1EEBB6762D25A3FE00C25FF3 /* Habit Tracking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Tracking.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E240CEE2D27102A00F689B3 /* Habit Tracking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Tracking.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -33,16 +33,8 @@
 			isa = PBXGroup;
 			children = (
 				1EEBB6782D25A3FE00C25FF3 /* Habit Tracking */,
-				1EEBB6772D25A3FE00C25FF3 /* Products */,
+				1E240CEE2D27102A00F689B3 /* Habit Tracking.app */,
 			);
-			sourceTree = "<group>";
-		};
-		1EEBB6772D25A3FE00C25FF3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1EEBB6762D25A3FE00C25FF3 /* Habit Tracking.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -67,7 +59,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Habit Tracking";
-			productReference = 1EEBB6762D25A3FE00C25FF3 /* Habit Tracking.app */;
+			productReference = 1E240CEE2D27102A00F689B3 /* Habit Tracking.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -95,7 +87,7 @@
 			mainGroup = 1EEBB66D2D25A3FE00C25FF3;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 1EEBB6772D25A3FE00C25FF3 /* Products */;
+			productRefGroup = 1EEBB66D2D25A3FE00C25FF3;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
