@@ -8,6 +8,7 @@ struct MetaFlowApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(dataStore)
+                .font(Font.custom("Poppins-Regular", size: 16))
         }
     }
 }

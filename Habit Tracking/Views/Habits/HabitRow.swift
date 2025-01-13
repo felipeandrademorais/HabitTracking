@@ -9,23 +9,26 @@ struct HabitRow: View {
         HStack {
             Circle()
                 .fill(Color(habit.cor))
-                .frame(width: 12, height: 12)
+                .frame(width: 20, height: 20)
             Text(habit.nome)
-                .font(.subheadline)
+                .font(
+                    Font.custom("Poppins-Regular", size: 14)
+                )
                 .padding(.leading, 5)
-                .bold()
+                .foregroundColor(.black)
             Spacer()
             if isHabitCompleted {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(.green)
+                    .font(
+                        Font.system(size: 20)
+                    )
             }
         }
-        .padding(15)
-        .background(Color(habit.cor))
-        .cornerRadius(8)
-        .onAppear {
-            print(habit)
-        }
+        .padding(.horizontal, 15)
+        .padding(.vertical, 20)
+        .background(Color.blueSoft.opacity(0.5))
+        .cornerRadius(12)
     }
 
     private var isHabitCompleted: Bool {

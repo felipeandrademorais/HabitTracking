@@ -21,14 +21,16 @@ struct CalendarDayCell: View {
         Text("\(Calendar.current.component(.day, from: date))")
             .frame(minWidth: 40, minHeight: 40)
             .background(
-                isSelected ? Color.blue.opacity(0.2) :
+                isSelected ? Color.blueSoft :
                 dayCompleted ? Color.green.opacity(0.2) : Color.clear
             )
             .cornerRadius(20)
-            .foregroundColor(isSelected ? .white : .primary)
             .onTapGesture {
                 onSelect()
             }
+            .foregroundColor(.fontSoft)
+            .font(Font.custom("Poppins-Medium", size: 16))
+            
     }
 
     private func checkIfAllHabitsAreCompleted(on date: Date) -> Bool {

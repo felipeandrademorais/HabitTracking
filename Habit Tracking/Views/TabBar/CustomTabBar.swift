@@ -24,7 +24,7 @@ struct CustomTabBar: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 22)
-                                .foregroundColor(selectedTab == tab.tag ? Color.defaultDark : .gray)
+                                .foregroundColor(selectedTab == tab.tag ? Color.defaultDark : .fontSoft)
                         }
                         .padding(10)
                         .frame(maxWidth: .infinity)
@@ -35,7 +35,7 @@ struct CustomTabBar: View {
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.white)
-                    .shadow(color: Color.black.opacity(0.3), radius: 6, x: 0, y: -10)
+                    .shadow(color: Color.black.opacity(0.2), radius: 6, x: 0, y: -8)
             )
         }
     }

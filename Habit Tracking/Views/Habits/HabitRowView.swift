@@ -6,29 +6,43 @@ struct HabitRowView: View {
     
     var body: some View {
         HStack {
-            Button(action: {
-                toggleCompletion(for: habit)
-            }) {
-                Image(systemName: isCompletedToday ? "checkmark.square.fill" : "square")
-                    .foregroundColor(.black)
-                    .font(.title2)
-            }
-            .buttonStyle(PlainButtonStyle())
-
             VStack(alignment: .leading) {
                 Text(habit.nome)
-                    .font(.headline)
-                    .strikethrough(isCompletedToday, color: .gray)
-                    .foregroundColor(.primary)
+                    .font(
+                        Font.custom(
+                            "Poppins-Regular",
+                            size: 14
+                        )
+                    )
+                    .strikethrough(
+                        isCompletedToday,
+                        color: .blackSoft
+                    )
+                    .foregroundColor(isCompletedToday ? .fontSoft : .black)
             }
             
             Spacer()
+            
+            Button(
+                action: {
+                    toggleCompletion(for: habit)
+                }
+            ) {
+                Image(
+                    systemName: isCompletedToday ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(isCompletedToday ? .fontSoft : .black)
+                    .font(
+                        Font.system(size: 20)
+                    )
+            }
+            .buttonStyle(PlainButtonStyle())
         }
-        .padding()
+        .padding(.horizontal, 15)
+        .padding(.vertical, 20)
         .background(
             Color(habit.cor).opacity(0.7)
         )
-        .cornerRadius(15)
+        .cornerRadius(12)
         .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
         
     }
@@ -65,13 +79,12 @@ struct HabitRowView_Previews: PreviewProvider {
     static var previews: some View {
         let dataStore = HabitDataStore()
         
-        // Criamos manualmente um hábito de exemplo
         let habitExample = Habit(
             nome: "Beber 2L de água",
             cor: "color2",
             dataInicio: Date().addingTimeInterval(-86400 * 5),
             repeticoes: .diario,
-            datesCompleted: [Date()] // já concluído hoje
+            datesCompleted: [Date()]
         )
         
         dataStore.habits = [habitExample]
