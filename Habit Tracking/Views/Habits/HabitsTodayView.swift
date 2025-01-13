@@ -20,21 +20,31 @@ struct HabitsTodayView: View {
                     })
                     .frame(maxHeight: 85)
                     
-                    List {
-                        ForEach(todaysHabits) { habit in
-                            HabitRowView(habit: habit)
-                                .padding(.vertical, 8)
-                                .listRowInsets(EdgeInsets())
-                                .listRowBackground(
-                                    Color.clear
-                                )
-                                .listRowSeparator(.hidden)
+                    if (todaysHabits.isEmpty) {
+                        Spacer()
+                        Image("Woman")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(40)
+                        
+                        Spacer()
+                    } else {
+                        List {
+                            ForEach(todaysHabits) { habit in
+                                HabitRowView(habit: habit)
+                                    .padding(.vertical, 8)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowBackground(
+                                        Color.clear
+                                    )
+                                    .listRowSeparator(.hidden)
+                            }
+                            .onDelete(perform: deleteHabits)
                         }
-                        .onDelete(perform: deleteHabits)
+                        .listStyle(.plain)
+                        .listRowSeparator(.hidden)
+                        .padding()
                     }
-                    .listStyle(.plain)
-                    .listRowSeparator(.hidden)
-                    .padding()
                 }
         }
     }
@@ -64,9 +74,7 @@ struct HabitsTodayView_Previews: PreviewProvider {
     static var previews: some View {
         let exampleDataStore = HabitDataStore()
         exampleDataStore.habits = [
-            Habit(nome: "Exercício", cor: "color1", dataInicio: Date(), repeticoes: .diario),
-            Habit(nome: "Meditação", cor: "color2", dataInicio: Date().addingTimeInterval(-86400), repeticoes: .diario),
-            Habit(nome: "Leitura", cor: "color3", dataInicio: Date().addingTimeInterval(-172800), repeticoes: .diario)
+           
         ]
 
         return HabitsTodayView()

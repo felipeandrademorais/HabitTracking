@@ -76,7 +76,7 @@ extension CalendarView {
                 .foregroundColor(.fontSoft)
 
             if habitsForSelectedDate.isEmpty {
-                Text("No habits for today")
+                Text("Nenhum Hábito para essa data")
                     .foregroundColor(.fontSoft)
                     .padding()
             } else {
