@@ -40,7 +40,7 @@ struct HabitRowView: View {
         .padding(.horizontal, 15)
         .padding(.vertical, 20)
         .background(
-            Color(habit.cor).opacity(0.7)
+            isCompletedToday ? Color(habit.cor).opacity(0.2) : Color(habit.cor).opacity(0.7)
         )
         .cornerRadius(12)        
     }

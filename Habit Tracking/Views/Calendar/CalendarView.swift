@@ -80,12 +80,10 @@ extension CalendarView {
                     .foregroundColor(.fontSoft)
                     .padding()
             } else {
-                ForEach(habitsForSelectedDate, id: \.id) { habit in
-                    HabitList(
-                        habits: habitsForSelectedDate,
-                        selectedDate: selectedDate
-                    )
-                }
+                HabitList(
+                    habits: habitsForSelectedDate,
+                    selectedDate: selectedDate
+                )
             }
             
             Spacer()

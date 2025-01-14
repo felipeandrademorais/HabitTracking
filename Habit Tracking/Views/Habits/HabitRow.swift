@@ -27,14 +27,12 @@ struct HabitRow: View {
         }
         .padding(.horizontal, 15)
         .padding(.vertical, 20)
-        .background(Color.blueSoft.opacity(0.5))
+        .background(Color.blueSoft)
         .cornerRadius(12)
     }
 
     private var isHabitCompleted: Bool {
-        habit.datesCompleted.contains {
-            Calendar.current.isDate($0, inSameDayAs: selectedDate)
-        }
+        !habit.datesCompleted.isEmpty
     }
 }
 
