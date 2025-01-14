@@ -42,9 +42,7 @@ struct HabitRowView: View {
         .background(
             Color(habit.cor).opacity(0.7)
         )
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
-        
+        .cornerRadius(12)        
     }
     
     private var isCompletedToday: Bool {

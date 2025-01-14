@@ -66,8 +66,6 @@ struct AddHabitView: View {
             }
             .background(Color.blue)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-        .zIndex(1000)
     }
 
     private func addHabit() {

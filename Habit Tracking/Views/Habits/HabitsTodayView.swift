@@ -9,43 +9,61 @@ import SwiftUI
 
 struct HabitsTodayView: View {
     @EnvironmentObject var dataStore: HabitDataStore
-
-    @State private var selectedDate: Date = Date() // Estado para rastrear o dia selecionado.
+    @State private var selectedDate: Date = Date()
+    @State private var isShowingAddHabit: Bool = false
 
     var body: some View {
-            ZStack(alignment: .bottomTrailing) {
-                VStack {
-                    WeekView(onDaySelected: { date in
-                        selectedDate = date
-                    })
-                    .frame(maxHeight: 85)
+        ZStack(alignment: .bottomTrailing) {
+            VStack {
+                WeekView(onDaySelected: { date in
+                    selectedDate = date
+                })
+                .frame(maxHeight: 85)
+                
+                if (todaysHabits.isEmpty) {
+                    Spacer()
+                    Image("Woman")
+                        .resizable()
+                        .scaledToFit()
+                        .padding(40)
                     
-                    if (todaysHabits.isEmpty) {
-                        Spacer()
-                        Image("Woman")
-                            .resizable()
-                            .scaledToFit()
-                            .padding(40)
-                        
-                        Spacer()
-                    } else {
-                        List {
-                            ForEach(todaysHabits) { habit in
-                                HabitRowView(habit: habit)
-                                    .padding(.vertical, 8)
-                                    .listRowInsets(EdgeInsets())
-                                    .listRowBackground(
-                                        Color.clear
-                                    )
-                                    .listRowSeparator(.hidden)
-                            }
-                            .onDelete(perform: deleteHabits)
+                    Spacer()
+                } else {
+                    List {
+                        ForEach(todaysHabits) { habit in
+                            HabitRowView(habit: habit)
+                                .padding(.vertical, 8)
+                                .listRowInsets(EdgeInsets())
+                                .listRowBackground(
+                                    Color.clear
+                                )
+                                .listRowSeparator(.hidden)
                         }
-                        .listStyle(.plain)
-                        .listRowSeparator(.hidden)
-                        .padding()
+                        .onDelete(perform: deleteHabits)
                     }
+                    .listStyle(.plain)
+                    .listRowSeparator(.hidden)
+                    .padding()
                 }
+            }
+            
+            Button(action: {
+                isShowingAddHabit = true
+            }) {
+                Image(systemName: "plus")
+                    .font(.title)
+                    .foregroundColor(.black)
+                    .padding()
+                    .background(.white)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+            }
+            .padding(.trailing, 20)
+            .padding(.bottom, 45)
+            
+        }.sheet(isPresented: $isShowingAddHabit) {
+            AddHabitView()
+                .environmentObject(dataStore)
         }
     }
 
