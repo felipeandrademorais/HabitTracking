@@ -31,7 +31,10 @@ struct HabitsTodayView: View {
                 } else {
                     List {
                         ForEach(todaysHabits) { habit in
-                            HabitRowView(habit: habit)
+                            HabitRowView(
+                                habit: habit,
+                                selectedDate: selectedDate
+                            )
                                 .padding(.vertical, 8)
                                 .listRowInsets(EdgeInsets())
                                 .listRowBackground(

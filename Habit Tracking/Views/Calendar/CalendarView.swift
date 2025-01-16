@@ -39,7 +39,7 @@ extension CalendarView {
     }
 
     private var daysOfWeekView: some View {
-        let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        let daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"]
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
             ForEach(daysOfWeek, id: \.self) { day in
                 Text(day)
@@ -68,7 +68,9 @@ extension CalendarView {
     @ViewBuilder
     private func habitsListView(for date: Date) -> some View {
         let habitsForSelectedDate = dataStore.habits.filter { habit in
-            Calendar.current.isDate(habit.dataInicio, equalTo: date, toGranularity: .day)
+            let startOfHabit = Calendar.current.startOfDay(for: habit.dataInicio)
+            let startOfSelectedDate = Calendar.current.startOfDay(for: date)
+            return startOfHabit <= startOfSelectedDate
         }
         VStack(spacing: 20) {
             Text(formattedDate(date, format: "MMMM d, EEEE"))
@@ -101,7 +103,7 @@ extension CalendarView {
         else { return [] }
 
         let firstDayOfMonthWeekday = Calendar.current.component(.weekday, from: monthStart)
-        let emptyDays = Array(repeating: nil as Date?, count: firstDayOfMonthWeekday - 2)
+        let emptyDays = Array(repeating: nil as Date?, count: firstDayOfMonthWeekday - 1)
 
         let days = range.compactMap { day -> Date? in
             Calendar.current.date(byAdding: .day, value: day - 1, to: monthStart)

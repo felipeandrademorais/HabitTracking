@@ -11,11 +11,12 @@ struct AddHabitView: View {
 
     var body: some View {
         ZStack {
-            Color.blue.edgesIgnoringSafeArea(.all)
+            Color.color2.ignoresSafeArea()
             
             Form {
                 Section() {
                     TextField("Nome do hábito", text: $nome)
+                        .font(Font.custom("Poppins-Regular", size: 14))
                         .background(Color.white)
                         .padding(.vertical, 10)
                         .overlay(
@@ -35,6 +36,12 @@ struct AddHabitView: View {
                         displayedComponents: .date
                     )
                 }
+                
+               /*
+                VStack() {
+                    TaskCycleCardView()
+                }*/
+                
                 
                 Picker("Frequência", selection: $repeticao) {
                     ForEach(Repeticao.allCases, id: \.self) { freq in
@@ -64,8 +71,8 @@ struct AddHabitView: View {
                 }
                 .disabled(nome.isEmpty)
             }
-            .background(Color.blue)
         }
+        .scrollContentBackground(.hidden)
     }
 
     private func addHabit() {

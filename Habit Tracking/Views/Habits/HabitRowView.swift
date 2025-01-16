@@ -3,6 +3,8 @@ import SwiftUI
 struct HabitRowView: View {
     @EnvironmentObject var dataStore: HabitDataStore
     var habit: Habit
+    // Novo parâmetro
+    var selectedDate: Date
     
     var body: some View {
         HStack {
@@ -15,10 +17,10 @@ struct HabitRowView: View {
                         )
                     )
                     .strikethrough(
-                        isCompletedToday,
+                        isCompletedOnSelectedDate,
                         color: .blackSoft
                     )
-                    .foregroundColor(isCompletedToday ? .fontSoft : .black)
+                    .foregroundColor(isCompletedOnSelectedDate ? .fontSoft : .black)
             }
             
             Spacer()
@@ -29,45 +31,48 @@ struct HabitRowView: View {
                 }
             ) {
                 Image(
-                    systemName: isCompletedToday ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(isCompletedToday ? .fontSoft : .black)
-                    .font(
-                        Font.system(size: 20)
-                    )
+                    systemName: isCompletedOnSelectedDate
+                        ? "checkmark.circle.fill"
+                        : "circle"
+                )
+                .foregroundColor(isCompletedOnSelectedDate ? .fontSoft : .black)
+                .font(Font.system(size: 20))
             }
             .buttonStyle(PlainButtonStyle())
         }
         .padding(.horizontal, 15)
         .padding(.vertical, 20)
         .background(
-            isCompletedToday ? Color(habit.cor).opacity(0.2) : Color(habit.cor).opacity(0.7)
+            isCompletedOnSelectedDate
+                ? Color(habit.cor).opacity(0.2)
+                : Color(habit.cor).opacity(0.7)
         )
-        .cornerRadius(12)        
+        .cornerRadius(12)
     }
     
-    private var isCompletedToday: Bool {
-        // Verifica se a 'datesCompleted' contém a data de hoje
-        let hoje = Calendar.current.startOfDay(for: Date())
+    // MARK: - Computed property para verificar se está concluído
+    private var isCompletedOnSelectedDate: Bool {
+        let day = Calendar.current.startOfDay(for: selectedDate)
         return habit.datesCompleted.contains {
-            Calendar.current.startOfDay(for: $0) == hoje
+            Calendar.current.startOfDay(for: $0) == day
         }
     }
     
+    // MARK: - Lógica de toggle, removendo/adicionando somente a data selecionada
     private func toggleCompletion(for habit: Habit) {
         var updatedHabit = habit
-        let hoje = Calendar.current.startOfDay(for: Date())
+        let day = Calendar.current.startOfDay(for: selectedDate)
         
-        if isCompletedToday {
-            // Se já está concluído hoje, removemos a data
+        if isCompletedOnSelectedDate {
+            // Se já está concluído, remove somente a data selecionada
             updatedHabit.datesCompleted.removeAll { date in
-                Calendar.current.startOfDay(for: date) == hoje
+                Calendar.current.startOfDay(for: date) == day
             }
         } else {
-            // Se não está concluído hoje, adicionamos a data de hoje
-            updatedHabit.datesCompleted.append(Date())
+            // Se ainda não está concluído, adiciona somente a data selecionada
+            updatedHabit.datesCompleted.append(day)
         }
         
-        // Atualiza no dataStore
         dataStore.updateHabit(updatedHabit)
     }
 }
@@ -82,15 +87,18 @@ struct HabitRowView_Previews: PreviewProvider {
             cor: "color2",
             dataInicio: Date().addingTimeInterval(-86400 * 5),
             repeticoes: .diario,
-            datesCompleted: [Date()]
+            datesCompleted: [Calendar.current.startOfDay(for: Date())]
         )
         
         dataStore.habits = [habitExample]
         
-        return HabitRowView(habit: habitExample)
-            .environmentObject(dataStore)
-            .previewLayout(.sizeThatFits)
-            .padding()
-            .previewDisplayName("Habit Row com Checkbox")
+        return HabitRowView(
+            habit: habitExample,
+            selectedDate: Date()
+        )
+        .environmentObject(dataStore)
+        .previewLayout(.sizeThatFits)
+        .padding()
+        .previewDisplayName("Habit Row com Checkbox")
     }
 }

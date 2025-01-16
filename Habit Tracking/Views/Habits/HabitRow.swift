@@ -5,24 +5,23 @@ struct HabitRow: View {
     let selectedDate: Date
 
     var body: some View {
-        
         HStack {
             Circle()
                 .fill(Color(habit.cor))
                 .frame(width: 20, height: 20)
+            
             Text(habit.nome)
-                .font(
-                    Font.custom("Poppins-Regular", size: 14)
-                )
+                .font(Font.custom("Poppins-Regular", size: 14))
                 .padding(.leading, 5)
                 .foregroundColor(.black)
+            
             Spacer()
-            if isHabitCompleted {
+            
+            // Só mostra o checkmark se foi concluído na `selectedDate`
+            if isCompletedOnSelectedDate {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(.green)
-                    .font(
-                        Font.system(size: 20)
-                    )
+                    .font(Font.system(size: 20))
             }
         }
         .padding(.horizontal, 15)
@@ -31,8 +30,11 @@ struct HabitRow: View {
         .cornerRadius(12)
     }
 
-    private var isHabitCompleted: Bool {
-        !habit.datesCompleted.isEmpty
+    private var isCompletedOnSelectedDate: Bool {
+        let selectedDay = Calendar.current.startOfDay(for: selectedDate)
+        return habit.datesCompleted.contains { date in
+            Calendar.current.startOfDay(for: date) == selectedDay
+        }
     }
 }
 
