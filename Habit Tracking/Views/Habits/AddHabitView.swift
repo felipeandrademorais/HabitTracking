@@ -5,7 +5,7 @@ struct AddHabitView: View {
     @Environment(\.presentationMode) var presentationMode
 
     @State private var nome: String = ""
-    @State private var cor: Color = .color1
+    @State private var cor: Color = predefinedColors.first ?? .clear
     @State private var dataInicio = Date()
     @State private var repeticao: Repeticao = .diario
 
@@ -49,9 +49,12 @@ struct AddHabitView: View {
                     }
                 }
                 
-                Section(header: Text("Cor")) {
+                Section(header: Text("")) {
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
+                        LazyHGrid(
+                            rows: [GridItem(.fixed(40), spacing: 20)],
+                            spacing: 20
+                        ) {
                             ForEach(predefinedColors, id: \.self) { color in
                                 ColorCircleSelector(
                                     color: color,
@@ -61,9 +64,11 @@ struct AddHabitView: View {
                                 }
                             }
                         }
+                        .frame(maxWidth: .infinity)
                         .padding(4)
                     }
                 }
+                .listRowBackground(Color.clear)
                 
                 Button(action: addHabit) {
                     Text("Adicionar Hábito")
@@ -100,7 +105,7 @@ struct ColorCircleSelector: View {
             .frame(width: 32, height: 32)
             .overlay(
                 Circle()
-                    .stroke(isSelected ? Color.black.opacity(0.5) : Color.white, lineWidth: 2)
+                    .stroke(isSelected ? Color.black.opacity(0.5) : Color.white, lineWidth: 3)
             )
             .padding(.trailing, 4)
             .onTapGesture {
