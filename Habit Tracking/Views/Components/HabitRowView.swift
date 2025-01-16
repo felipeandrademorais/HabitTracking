@@ -3,21 +3,17 @@ import SwiftUI
 struct HabitRowView: View {
     @EnvironmentObject var dataStore: HabitDataStore
     var habit: Habit
-    // Novo parâmetro
     var selectedDate: Date
-    
+    var showCheckbox: Bool = true
+
     var body: some View {
         HStack {
             Text(habit.icon)
                 .font(.system(size: 24))
+            
             VStack(alignment: .leading) {
                 Text(habit.nome)
-                    .font(
-                        Font.custom(
-                            "Poppins-Regular",
-                            size: 14
-                        )
-                    )
+                    .font(Font.custom("Poppins-Regular", size: 14))
                     .strikethrough(
                         isCompletedOnSelectedDate,
                         color: .blackSoft
@@ -27,20 +23,31 @@ struct HabitRowView: View {
             
             Spacer()
             
-            Button(
-                action: {
-                    toggleCompletion(for: habit)
+            if showCheckbox {
+                Button(
+                    action: {
+                        toggleCompletion(for: habit)
+                    }
+                ) {
+                    Image(
+                        systemName: isCompletedOnSelectedDate
+                            ? "checkmark.circle.fill"
+                            : "circle"
+                    )
+                    .foregroundColor(isCompletedOnSelectedDate ? .green : .black)
+                    .font(Font.system(size: 20))
                 }
-            ) {
-                Image(
-                    systemName: isCompletedOnSelectedDate
-                        ? "checkmark.circle.fill"
-                        : "circle"
-                )
-                .foregroundColor(isCompletedOnSelectedDate ? .fontSoft : .black)
-                .font(Font.system(size: 20))
+                .buttonStyle(PlainButtonStyle())
+            } else {
+                if (isCompletedOnSelectedDate) {
+                    Image(
+                        systemName: "checkmark.circle.fill"
+                    )
+                    .foregroundColor(.green)
+                    .font(Font.system(size: 20))
+                }
             }
-            .buttonStyle(PlainButtonStyle())
+            
         }
         .padding(.horizontal, 15)
         .padding(.vertical, 20)
@@ -52,12 +59,9 @@ struct HabitRowView: View {
         .cornerRadius(12)
     }
     
-    // MARK: - Computed property para verificar se está concluído
+    // MARK: - Computed property para verificar se o hábito foi concluído
     private var isCompletedOnSelectedDate: Bool {
-        let day = Calendar.current.startOfDay(for: selectedDate)
-        return habit.datesCompleted.contains {
-            Calendar.current.startOfDay(for: $0) == day
-        }
+        habit.isCompleted(on: selectedDate)
     }
     
     // MARK: - Lógica de toggle, removendo/adicionando somente a data selecionada
@@ -102,6 +106,6 @@ struct HabitRowView_Previews: PreviewProvider {
         .environmentObject(dataStore)
         .previewLayout(.sizeThatFits)
         .padding()
-        .previewDisplayName("Habit Row com Checkbox")
+        .previewDisplayName("Habit Row com Checkbox e Validação")
     }
 }

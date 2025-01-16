@@ -1,11 +1,3 @@
-//
-//  CalendarDayCell.swift
-//  Habit Tracking
-//
-//  Created by Felipe Morais on 02/01/25.
-//
-
-
 import SwiftUI
 
 struct CalendarDayCell: View {
@@ -34,17 +26,8 @@ struct CalendarDayCell: View {
     }
 
     private func checkIfAllHabitsAreCompleted(on date: Date) -> Bool {
-        let day = Calendar.current.startOfDay(for: date)
         let activeHabits = dataStore.habits.filter { $0.dataInicio <= date }
         guard !activeHabits.isEmpty else { return false }
-
-        for habit in activeHabits {
-            if !habit.datesCompleted.contains(where: {
-                Calendar.current.startOfDay(for: $0) == day
-            }) {
-                return false
-            }
-        }
-        return true
+        return activeHabits.allSatisfy { $0.isCompleted(on: date) }
     }
 }

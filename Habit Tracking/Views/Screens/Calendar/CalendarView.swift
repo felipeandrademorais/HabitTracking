@@ -3,7 +3,7 @@ import SwiftUI
 struct CalendarView: View {
     @EnvironmentObject var dataStore: HabitDataStore
     @State private var currentMonth: Date = Date()
-    @State private var selectedDate: Date = Date() // Dia atual selecionado por padrão
+    @State private var selectedDate: Date = Date()
 
     var body: some View {
         VStack() {
@@ -82,10 +82,17 @@ extension CalendarView {
                     .foregroundColor(.fontSoft)
                     .padding()
             } else {
-                HabitList(
-                    habits: habitsForSelectedDate,
-                    selectedDate: selectedDate
-                )
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(habitsForSelectedDate, id: \.id) { habit in
+                            HabitRowView(
+                                habit: habit,
+                                selectedDate: selectedDate,
+                                showCheckbox: false
+                            )
+                        }
+                    }
+                }
             }
             
             Spacer()

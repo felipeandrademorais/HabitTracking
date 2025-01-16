@@ -14,7 +14,6 @@ class HabitDataStore: ObservableObject {
     private let habitsKey = "habitsKey"
 
     init() {
-        UserDefaults.standard.removeObject(forKey: habitsKey)
         loadHabits()
     }
 

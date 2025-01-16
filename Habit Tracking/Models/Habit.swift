@@ -26,4 +26,11 @@ struct Habit: Identifiable, Codable {
         self.datesCompleted = datesCompleted
         self.icon = icon
     }
+    
+    func isCompleted(on date: Date) -> Bool {
+        let selectedDay = Calendar.current.startOfDay(for: date)
+        return datesCompleted.contains { completedDate in
+            Calendar.current.startOfDay(for: completedDate) == selectedDay
+        }
+    }
 }
