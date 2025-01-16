@@ -38,7 +38,7 @@ struct HabitsTodayView: View {
                                 .padding(.vertical, 8)
                                 .listRowInsets(EdgeInsets())
                                 .listRowBackground(
-                                    Color.clear
+                                    Color.white.opacity(0.001)
                                 )
                                 .listRowSeparator(.hidden)
                         }

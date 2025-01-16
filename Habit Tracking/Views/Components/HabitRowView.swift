@@ -90,7 +90,7 @@ struct HabitRowView_Previews: PreviewProvider {
             nome: "Beber 2L de água",
             cor: "color2",
             dataInicio: Date().addingTimeInterval(-86400 * 5),
-            repeticoes: .diario,
+            repeticoes: .daily,
             datesCompleted: [Calendar.current.startOfDay(for: Date())],
             icon: "⭐️"
         )

@@ -1,6 +1,7 @@
 
 enum Repeticao: String, Codable, CaseIterable {
-    case diario = "Diário"
-    case semanal = "Semanal"
-    case diasEspecificos = "Dias Específicos"
+    case daily = "Diario"
+    case weekly = "Semanal"
+    case monthly = "Mensal"
 }
+

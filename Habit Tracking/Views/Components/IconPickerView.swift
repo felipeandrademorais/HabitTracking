@@ -37,7 +37,7 @@ struct IconPickerView: View {
                             // Destaque para o emoji selecionado
                             .background(
                                 Circle()
-                                    .fill(emoji == selectedIcon ? Color.gray.opacity(0.3) : Color.clear)
+                                    .fill(emoji == selectedIcon ? Color.gray.opacity(0.3) : Color.white.opacity(0.001))
                             )
                     }
                     .onTapGesture {

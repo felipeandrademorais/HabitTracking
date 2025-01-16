@@ -69,7 +69,7 @@ extension HabitDataStore {
                 nome: "Read",
                 cor: "Color1",
                 dataInicio: Date().addingTimeInterval(-86400),
-                repeticoes: .diario,
+                repeticoes: .daily,
                 datesCompleted: [],
                 icon: "⭐️"
             ),
@@ -77,7 +77,7 @@ extension HabitDataStore {
                 nome: "Exercise",
                 cor: "Color2",
                 dataInicio: Date(),
-                repeticoes: .diario,
+                repeticoes: .daily,
                 datesCompleted: [],
                 icon: "🔥"
             )

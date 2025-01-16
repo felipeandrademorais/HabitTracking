@@ -2,13 +2,13 @@ import SwiftUI
 
 struct TaskCycleCardView: View {
     // Em vez de @State, agora usamos @Binding
-    @Binding var selectedCycle: CycleType
+    @Binding var selectedCycle: Repeticao
     @Binding var selectedDays: [String]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .center, spacing: 16) {
             // Título
-            Text("Set a cycle for your task")
+            Text("Defina o ciclo do seu Hábito")
                 .font(Font.custom("Poppins-Regular", size: 14))
                 .foregroundColor(.fontSoft)
 
@@ -19,9 +19,9 @@ struct TaskCycleCardView: View {
                     .frame(height: 40)
 
                 GeometryReader { geometry in
-                    let segmentWidth = geometry.size.width / CGFloat(CycleType.allCases.count)
+                    let segmentWidth = geometry.size.width / CGFloat(Repeticao.allCases.count)
                     // Índice do ciclo selecionado
-                    let index = CycleType.allCases.firstIndex(of: selectedCycle) ?? 0
+                    let index = Repeticao.allCases.firstIndex(of: selectedCycle) ?? 0
 
                     // Retângulo de fundo que se move até o botão selecionado
                     RoundedRectangle(cornerRadius: 20)
@@ -34,7 +34,7 @@ struct TaskCycleCardView: View {
                 .frame(height: 40)
 
                 HStack(spacing: 0) {
-                    ForEach(CycleType.allCases, id: \.self) { cycle in
+                    ForEach(Repeticao.allCases, id: \.self) { cycle in
                         Button(action: {
                             withAnimation(.spring()) {
                                 selectedCycle = cycle
@@ -79,12 +79,6 @@ struct TaskCycleCardView: View {
             selectedDays.append(day)
         }
     }
-}
-
-enum CycleType: String, CaseIterable {
-    case daily = "Diario"
-    case weekly = "Semanal"
-    case monthly = "Mensal"
 }
 
 // Preview

@@ -7,14 +7,10 @@ struct AddHabitView: View {
     @State private var nome: String = ""
     @State private var cor: Color = predefinedColors.first ?? .clear
     @State private var dataInicio = Date()
-    @State private var repeticao: Repeticao = .diario
-
-    // Ícone
+    @State private var repeticao: Repeticao = .daily
     @State private var iconName: String = "⭐️"
     @State private var showIconPicker: Bool = false
-
-    // Novas variáveis para o ciclo e para os dias
-    @State private var selectedCycle: CycleType = .weekly
+    @State private var selectedCycle: Repeticao = .weekly
     @State private var selectedDays: [String] = ["Seg", "Ter", "Qua", "Qui", "Sex"]
 
     var body: some View {
@@ -22,16 +18,13 @@ struct AddHabitView: View {
             Color.color2.ignoresSafeArea()
             
             Form {
-                // Seção do Ícone
                 Section {
                     VStack(spacing: 2) {
-                        // Emoji principal
-                        Text(iconName) // Usa o emoji selecionado
-                            .font(.system(size: 65)) // Define o tamanho do emoji
+                        Text(iconName)
+                            .font(.system(size: 60))
 
-                        // Texto de instrução
                         Text("Clique no ícone para alterá-lo")
-                            .font(.system(size: 8))
+                            .font(Font.custom("Poppins-Regular", size: 10))
                     }
                     .frame(maxWidth: .infinity)
                     .onTapGesture {
@@ -45,9 +38,9 @@ struct AddHabitView: View {
                         )
                     }
                 }
-                .listRowBackground(Color.clear)
+                .listRowBackground(Color.white.opacity(0.001))
                 
-                // Seção do TextField (nome)
+                
                 Section {
                     TextField("Nome do hábito", text: $nome)
                         .font(Font.custom("Poppins-Regular", size: 14))
@@ -73,31 +66,30 @@ struct AddHabitView: View {
                 }
                 
                 // Seção das cores
-                Section(header: Text("")) {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHGrid(
-                            rows: [GridItem(.fixed(40), spacing: 20)],
-                            spacing: 20
-                        ) {
-                            ForEach(predefinedColors, id: \.self) { color in
-                                ColorCircleSelector(
-                                    color: color,
-                                    isSelected: cor == color
-                                ) {
-                                    cor = color
-                                }
+                Section {
+                    LazyHGrid(
+                        rows: [GridItem(.fixed(40), spacing: 20)],
+                        spacing: 20
+                    ) {
+                        ForEach(predefinedColors, id: \.self) { color in
+                            ColorCircleSelector(
+                                color: color,
+                                isSelected: cor == color
+                            ) {
+                                cor = color
                             }
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(4)
                     }
+                    .frame(maxWidth: .infinity)
+                    .padding()
                 }
-                .listRowBackground(Color.clear)
+                .listRowBackground(Color.white.opacity(0.001))
                 
                 // Botão para adicionar Hábito
                 Button(action: addHabit) {
-                    Text("Adicionar Hábito")
+                    Text("Adicionar")
                         .frame(maxWidth: .infinity)
+                        .foregroundStyle(.fontSoft)
                 }
                 .disabled(nome.isEmpty)
             }
@@ -120,27 +112,6 @@ struct AddHabitView: View {
 
         dataStore.addHabit(newHabit)
         presentationMode.wrappedValue.dismiss()
-    }
-}
-
-// MARK: - Exemplo de ColorCircleSelector (inalterado)
-struct ColorCircleSelector: View {
-    let color: Color
-    let isSelected: Bool
-    let onTap: () -> Void
-
-    var body: some View {
-        Circle()
-            .fill(color)
-            .frame(width: 32, height: 32)
-            .overlay(
-                Circle()
-                    .stroke(isSelected ? Color.black.opacity(0.5) : Color.white, lineWidth: 3)
-            )
-            .padding(.trailing, 4)
-            .onTapGesture {
-                onTap()
-            }
     }
 }
 

@@ -14,7 +14,7 @@ struct CalendarDayCell: View {
             .frame(minWidth: 40, minHeight: 40)
             .background(
                 isSelected ? Color.blueSoft :
-                dayCompleted ? Color.green.opacity(0.2) : Color.clear
+                dayCompleted ? Color.green.opacity(0.2) : Color.white.opacity(0.001)
             )
             .cornerRadius(20)
             .onTapGesture {
@@ -26,8 +26,16 @@ struct CalendarDayCell: View {
     }
 
     private func checkIfAllHabitsAreCompleted(on date: Date) -> Bool {
-        let activeHabits = dataStore.habits.filter { $0.dataInicio <= date }
+        let startOfSelectedDate = Calendar.current.startOfDay(for: date)
+        
+        // Filtrar hábitos ativos na data selecionada
+        let activeHabits = dataStore.habits.filter {
+            Calendar.current.startOfDay(for: $0.dataInicio) <= startOfSelectedDate
+        }
+        
         guard !activeHabits.isEmpty else { return false }
+
+        // Verificar se todos os hábitos ativos estão concluídos
         return activeHabits.allSatisfy { $0.isCompleted(on: date) }
     }
 }
