@@ -18,7 +18,7 @@ struct ContentView: View {
         CustomTabBarContainer(tabs: [
             TabItem(tag: "calendar", icon: "calendar", content: AnyView(CalendarView())),
             TabItem(tag: "habits", icon: "checklist.checked", content: AnyView(HabitsTodayView())),
-            TabItem(tag: "profile", icon: "person", content: AnyView(ProfileTabView()))
+            TabItem(tag: "profile", icon: "person", content: AnyView(UserProfileView()))
         ]){
             CalendarView()
         }

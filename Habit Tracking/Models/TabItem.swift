@@ -1,9 +1,3 @@
-//
-//  TabItem.swift
-//  Habit Tracking
-//
-//  Created by Felipe Morais on 06/01/25.
-//
 import SwiftUI
 
 struct TabItem: Identifiable {
