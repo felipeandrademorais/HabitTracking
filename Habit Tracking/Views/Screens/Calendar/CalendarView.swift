@@ -31,7 +31,6 @@ extension CalendarView {
             Text(formattedDate(currentMonth, format: "LLLL"))
                 .font(Font.custom("Poppins-Regular", size: 16))
             Spacer()
-            
             Text(formattedDate(currentMonth, format: "yyyy"))
                 .font(Font.custom("Poppins-Regular", size: 12))
         }
@@ -39,9 +38,8 @@ extension CalendarView {
     }
 
     private var daysOfWeekView: some View {
-        let daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"]
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
-            ForEach(daysOfWeek, id: \.self) { day in
+            ForEach(days, id: \.self) { day in
                 Text(day)
                     .font(Font.custom("Poppins-Thin", size: 12))
                     .frame(maxWidth: .infinity)
@@ -67,11 +65,7 @@ extension CalendarView {
 
     @ViewBuilder
     private func habitsListView(for date: Date) -> some View {
-        let habitsForSelectedDate = dataStore.habits.filter { habit in
-            let startOfHabit = Calendar.current.startOfDay(for: habit.dataInicio)
-            let startOfSelectedDate = Calendar.current.startOfDay(for: date)
-            return startOfHabit <= startOfSelectedDate
-        }
+        let habitsForSelectedDate = dataStore.habits(for: date)
         VStack(spacing: 20) {
             Text(formattedDate(date, format: "MMMM d, EEEE"))
                 .font(.headline)

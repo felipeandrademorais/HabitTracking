@@ -5,8 +5,6 @@ struct TaskCycleCardView: View {
     @Binding var selectedCycle: CycleType
     @Binding var selectedDays: [String]
 
-    let days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"]
-
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             // Título
