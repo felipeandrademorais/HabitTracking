@@ -31,8 +31,6 @@ struct CustomTabBarContainer<Content: View>: View {
             
             CustomTabBar(selectedTab: $selectedTab, tabs: tabs)
         }
-        .edgesIgnoringSafeArea(.bottom)
-        .padding(.bottom, 1)
     }
 }
 

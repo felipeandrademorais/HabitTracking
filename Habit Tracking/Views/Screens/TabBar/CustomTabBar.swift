@@ -1,9 +1,3 @@
-//
-//  CustomTabBar.swift
-//  Habit Tracking
-//
-//  Created by Felipe Morais on 06/01/25.
-//
 import SwiftUI
 
 struct CustomTabBar: View {
@@ -26,12 +20,11 @@ struct CustomTabBar: View {
                                 .frame(height: 22)
                                 .foregroundColor(selectedTab == tab.tag ? Color.defaultDark : .fontSoft)
                         }
-                        .padding(10)
                         .frame(maxWidth: .infinity)
                     }
                 }
             }
-            .padding()
+            .frame(height: 80)
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.white)
