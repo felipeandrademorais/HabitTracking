@@ -1,9 +1,3 @@
-//
-//  TaskCycleCardView.swift
-//  Habit Tracking
-//
-//  Created by Felipe Morais on 15/01/25.
-//
 import SwiftUI
 
 struct TaskCycleCardView: View {
@@ -13,23 +7,36 @@ struct TaskCycleCardView: View {
     let days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"]
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 16) {
+            // Título
             Text("Set a cycle for your task")
                 .font(Font.custom("Poppins-Regular", size: 14))
                 .foregroundColor(.fontSoft)
             
-            Divider()
-
-            ZStack(alignment: .leading) {
+            // Seleção do ciclo (diário, semanal, mensal)
+            ZStack(alignment: .center) {
+                // Fundo cinza
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.grayLigth)
                     .frame(height: 40)
 
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.color3)
-                    .frame(width: UIScreen.main.bounds.width / 3 - 10, height: 40)
-                    .animation(.spring(), value: selectedCycle)
+                GeometryReader { geometry in
+                    // Calcula a largura de cada segmento dividindo a largura total
+                    let segmentWidth = geometry.size.width / CGFloat(CycleType.allCases.count)
+                    // Índice do enum selecionado
+                    let index = CycleType.allCases.firstIndex(of: selectedCycle) ?? 0
 
+                    // Retângulo laranja que “desliza” para o item selecionado
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.color3)
+                        .frame(width: segmentWidth, height: 40)
+                        // offset de X para mover o retângulo
+                        .offset(x: segmentWidth * CGFloat(index))
+                        .animation(.spring(), value: selectedCycle)
+                }
+                .frame(height: 40)
+
+                // Botões de seleção
                 HStack(spacing: 0) {
                     ForEach(CycleType.allCases, id: \.self) { cycle in
                         Button(action: {
@@ -39,18 +46,15 @@ struct TaskCycleCardView: View {
                         }) {
                             Text(cycle.rawValue)
                                 .font(Font.custom("Poppins-Medium", size: 14))
-                                .frame(width: buttonWidth())
+                                .frame(maxWidth: .infinity) // cada botão ocupa espaço igual
                         }
                         .foregroundColor(.black)
                     }
                 }
             }
-            .frame(height: 40)
 
-            Divider()
-
-            // Days of the week
-            HStack {
+            // Seleção de dias da semana
+            HStack(spacing: 12) {
                 ForEach(days, id: \.self) { day in
                     Button(action: {
                         toggleDaySelection(day)
@@ -67,12 +71,9 @@ struct TaskCycleCardView: View {
                 }
             }
         }
-        .padding(8)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.calendarBackground)
-        )
-        .padding()
+        .padding(8)             // Margem vertical
+        .listRowInsets(EdgeInsets())       // Remove padding adicional do Form
+        .buttonStyle(PlainButtonStyle())   // Importante para não sobrescrever os botões
     }
 
     private func toggleDaySelection(_ day: String) {
@@ -81,22 +82,6 @@ struct TaskCycleCardView: View {
         } else {
             selectedDays.append(day)
         }
-    }
-    
-    // Calcula o deslocamento com base no ciclo selecionado
-    private func getOffset(for cycle: CycleType) -> CGFloat {
-        switch cycle {
-        case .daily:
-            return 0
-        case .weekly:
-            return (UIScreen.main.bounds.width / 3 - 20)
-        case .monthly:
-            return 2 * (UIScreen.main.bounds.width / 3 - 20)
-        }
-    }
-    
-    private func buttonWidth() -> CGFloat {
-        (UIScreen.main.bounds.width - 32) / CGFloat(CycleType.allCases.count)
     }
 }
 
@@ -109,7 +94,10 @@ enum CycleType: String, CaseIterable {
 // Preview
 struct TaskCycleCardView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskCycleCardView()
-            .previewLayout(.sizeThatFits)
+        NavigationView {
+            Form {
+                TaskCycleCardView()
+            }
+        }
     }
 }

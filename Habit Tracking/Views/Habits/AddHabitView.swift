@@ -29,18 +29,19 @@ struct AddHabitView: View {
                         .padding(.bottom, 12)
                 }
                 
-                Section() {
+                /*Section() {
                     DatePicker(
                         "Data de Início",
                         selection: $dataInicio,
                         displayedComponents: .date
                     )
-                }
-                
-               /*
-                VStack() {
-                    TaskCycleCardView()
                 }*/
+                
+              
+                Section {
+                    TaskCycleCardView()
+                        .padding(.vertical)
+                }
                 
                 
                 Picker("Frequência", selection: $repeticao) {
