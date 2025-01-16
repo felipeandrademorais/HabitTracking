@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct TaskCycleCardView: View {
-    @State private var selectedCycle: CycleType = .weekly
-    @State private var selectedDays: [String] = ["Seg", "Ter", "Qua", "Qui", "Sex"]
+    // Em vez de @State, agora usamos @Binding
+    @Binding var selectedCycle: CycleType
+    @Binding var selectedDays: [String]
 
     let days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"]
 
@@ -12,31 +13,28 @@ struct TaskCycleCardView: View {
             Text("Set a cycle for your task")
                 .font(Font.custom("Poppins-Regular", size: 14))
                 .foregroundColor(.fontSoft)
-            
-            // Seleção do ciclo (diário, semanal, mensal)
-            ZStack(alignment: .center) {
-                // Fundo cinza
+
+            // Seleção do ciclo (Diário, Semanal, Mensal)
+            ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.grayLigth)
                     .frame(height: 40)
 
                 GeometryReader { geometry in
-                    // Calcula a largura de cada segmento dividindo a largura total
                     let segmentWidth = geometry.size.width / CGFloat(CycleType.allCases.count)
-                    // Índice do enum selecionado
+                    // Índice do ciclo selecionado
                     let index = CycleType.allCases.firstIndex(of: selectedCycle) ?? 0
 
-                    // Retângulo laranja que “desliza” para o item selecionado
+                    // Retângulo de fundo que se move até o botão selecionado
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.color3)
                         .frame(width: segmentWidth, height: 40)
-                        // offset de X para mover o retângulo
+                        // Desloca conforme o índice selecionado
                         .offset(x: segmentWidth * CGFloat(index))
                         .animation(.spring(), value: selectedCycle)
                 }
                 .frame(height: 40)
 
-                // Botões de seleção
                 HStack(spacing: 0) {
                     ForEach(CycleType.allCases, id: \.self) { cycle in
                         Button(action: {
@@ -46,7 +44,7 @@ struct TaskCycleCardView: View {
                         }) {
                             Text(cycle.rawValue)
                                 .font(Font.custom("Poppins-Medium", size: 14))
-                                .frame(maxWidth: .infinity) // cada botão ocupa espaço igual
+                                .frame(maxWidth: .infinity)
                         }
                         .foregroundColor(.black)
                     }
@@ -71,9 +69,9 @@ struct TaskCycleCardView: View {
                 }
             }
         }
-        .padding(8)             // Margem vertical
+        .padding(.vertical, 8)
         .listRowInsets(EdgeInsets())       // Remove padding adicional do Form
-        .buttonStyle(PlainButtonStyle())   // Importante para não sobrescrever os botões
+        .buttonStyle(PlainButtonStyle())   // Impede que a linha do Form "roube" o toque
     }
 
     private func toggleDaySelection(_ day: String) {
@@ -94,10 +92,11 @@ enum CycleType: String, CaseIterable {
 // Preview
 struct TaskCycleCardView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            Form {
-                TaskCycleCardView()
-            }
-        }
+        // Usamos .constant(...) pois aqui no preview não temos um @State real
+        TaskCycleCardView(
+            selectedCycle: .constant(.weekly),
+            selectedDays: .constant(["Seg", "Ter", "Qua", "Qui", "Sex"])
+        )
+        .previewLayout(.sizeThatFits)
     }
 }

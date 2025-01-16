@@ -9,12 +9,46 @@ struct AddHabitView: View {
     @State private var dataInicio = Date()
     @State private var repeticao: Repeticao = .diario
 
+    // Ícone
+    @State private var iconName: String = "⭐️"
+    @State private var showIconPicker: Bool = false
+
+    // Novas variáveis para o ciclo e para os dias
+    @State private var selectedCycle: CycleType = .weekly
+    @State private var selectedDays: [String] = ["Seg", "Ter", "Qua", "Qui", "Sex"]
+
     var body: some View {
         ZStack {
             Color.color2.ignoresSafeArea()
             
             Form {
-                Section() {
+                // Seção do Ícone
+                Section {
+                    VStack(spacing: 2) {
+                        // Emoji principal
+                        Text(iconName) // Usa o emoji selecionado
+                            .font(.system(size: 65)) // Define o tamanho do emoji
+
+                        // Texto de instrução
+                        Text("Clique no ícone para alterá-lo")
+                            .font(.system(size: 8))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .onTapGesture {
+                        showIconPicker = true
+                    }
+                    
+                    .popover(isPresented: $showIconPicker, arrowEdge: .bottom) {
+                        IconPickerView(
+                            selectedIcon: $iconName,
+                            isPresented: $showIconPicker
+                        )
+                    }
+                }
+                .listRowBackground(Color.clear)
+                
+                // Seção do TextField (nome)
+                Section {
                     TextField("Nome do hábito", text: $nome)
                         .font(Font.custom("Poppins-Regular", size: 14))
                         .background(Color.white)
@@ -29,27 +63,16 @@ struct AddHabitView: View {
                         .padding(.bottom, 12)
                 }
                 
-                /*Section() {
-                    DatePicker(
-                        "Data de Início",
-                        selection: $dataInicio,
-                        displayedComponents: .date
-                    )
-                }*/
-                
-              
+                // Seção do TaskCycleCardView
                 Section {
-                    TaskCycleCardView()
-                        .padding(.vertical)
+                    TaskCycleCardView(
+                        selectedCycle: $selectedCycle,
+                        selectedDays: $selectedDays
+                    )
+                    .padding()
                 }
                 
-                
-                Picker("Frequência", selection: $repeticao) {
-                    ForEach(Repeticao.allCases, id: \.self) { freq in
-                        Text(freq.rawValue).tag(freq)
-                    }
-                }
-                
+                // Seção das cores
                 Section(header: Text("")) {
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHGrid(
@@ -71,6 +94,7 @@ struct AddHabitView: View {
                 }
                 .listRowBackground(Color.clear)
                 
+                // Botão para adicionar Hábito
                 Button(action: addHabit) {
                     Text("Adicionar Hábito")
                         .frame(maxWidth: .infinity)
@@ -82,19 +106,24 @@ struct AddHabitView: View {
     }
 
     private func addHabit() {
+        // Converte a cor para o nome do asset
         guard let index = predefinedColors.firstIndex(of: cor) else { return }
         let colorName = "color\(index + 1)"
+
         let newHabit = Habit(
             nome: nome,
             cor: colorName,
             dataInicio: dataInicio,
-            repeticoes: repeticao
+            repeticoes: repeticao,
+            icon: iconName
         )
+
         dataStore.addHabit(newHabit)
         presentationMode.wrappedValue.dismiss()
     }
 }
 
+// MARK: - Exemplo de ColorCircleSelector (inalterado)
 struct ColorCircleSelector: View {
     let color: Color
     let isSelected: Bool

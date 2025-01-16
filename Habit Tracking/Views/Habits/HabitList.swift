@@ -18,9 +18,9 @@ struct HabitList: View {
 struct HabitList_Previews: PreviewProvider {
     static var previews: some View {
         let exampleHabits = [
-            Habit(nome: "Exercício", cor: "color1", dataInicio: Calendar.current.date(byAdding: .day, value: -3, to: Date()) ?? Date(), repeticoes: .diario),
-            Habit(nome: "Meditação", cor: "color2", dataInicio: Calendar.current.date(byAdding: .day, value: -5, to: Date()) ?? Date(), repeticoes: .diario),
-            Habit(nome: "Leitura", cor: "color3", dataInicio: Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date(), repeticoes: .diario)
+            Habit(nome: "Exercício", cor: "color1", dataInicio: Calendar.current.date(byAdding: .day, value: -3, to: Date()) ?? Date(), repeticoes: .diario, icon: "⭐️"),
+            Habit(nome: "Meditação", cor: "color2", dataInicio: Calendar.current.date(byAdding: .day, value: -5, to: Date()) ?? Date(), repeticoes: .diario, icon: "💖"),
+            Habit(nome: "Leitura", cor: "color3", dataInicio: Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date(), repeticoes: .diario, icon: "💪")
         ]
 
         let selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date()

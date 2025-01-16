@@ -38,14 +38,8 @@ struct ProfileTabView: View {
 //Preview
 struct MetaFlowApp_Previews: PreviewProvider {
     static var previews: some View {
-        let exampleDataStore = HabitDataStore()
-        exampleDataStore.habits = [
-            Habit(nome: "Exercício", cor: Color.color1.description, dataInicio: Date(), repeticoes: .diario),
-            Habit(nome: "Meditação", cor: Color.color2.description, dataInicio: Date().addingTimeInterval(-86400), repeticoes: .diario),
-            Habit(nome: "Leitura", cor: Color.color3.description, dataInicio: Date().addingTimeInterval(-172800), repeticoes: .diario)
-        ]
 
         return ContentView()
-            .environmentObject(exampleDataStore)
+            .environmentObject(HabitDataStore.sampleDataStore)
     }
 }

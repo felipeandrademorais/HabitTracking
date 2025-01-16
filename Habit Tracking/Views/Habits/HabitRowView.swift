@@ -8,6 +8,8 @@ struct HabitRowView: View {
     
     var body: some View {
         HStack {
+            Text(habit.icon)
+                .font(.system(size: 24))
             VStack(alignment: .leading) {
                 Text(habit.nome)
                     .font(
@@ -87,7 +89,8 @@ struct HabitRowView_Previews: PreviewProvider {
             cor: "color2",
             dataInicio: Date().addingTimeInterval(-86400 * 5),
             repeticoes: .diario,
-            datesCompleted: [Calendar.current.startOfDay(for: Date())]
+            datesCompleted: [Calendar.current.startOfDay(for: Date())],
+            icon: "⭐️"
         )
         
         dataStore.habits = [habitExample]

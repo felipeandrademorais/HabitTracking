@@ -7,6 +7,7 @@ struct Habit: Identifiable, Codable {
     var dataInicio: Date
     var repeticoes: Repeticao
     var datesCompleted: [Date]
+    var icon: String
 
     init(
         id: UUID = UUID(),
@@ -14,7 +15,8 @@ struct Habit: Identifiable, Codable {
         cor: String,
         dataInicio: Date,
         repeticoes: Repeticao,
-        datesCompleted: [Date] = []
+        datesCompleted: [Date] = [],
+        icon: String
     ) {
         self.id = id
         self.nome = nome
@@ -22,5 +24,6 @@ struct Habit: Identifiable, Codable {
         self.dataInicio = dataInicio
         self.repeticoes = repeticoes
         self.datesCompleted = datesCompleted
+        self.icon = icon
     }
 }

@@ -48,7 +48,8 @@ struct HabitRow_Previews: PreviewProvider {
             datesCompleted: [
                 Calendar.current.date(byAdding: .day, value: -2, to: Date()) ?? Date(),
                 Calendar.current.startOfDay(for: Date())
-            ]
+            ],
+            icon: "⭐️"
         )
 
         let selectedDate = Calendar.current.startOfDay(for: Date())

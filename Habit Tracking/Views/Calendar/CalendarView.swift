@@ -133,13 +133,7 @@ extension CalendarView {
 
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        let exampleDataStore = HabitDataStore()
-        exampleDataStore.habits = [
-            Habit(nome: "Read", cor: "Color1", dataInicio: Date().addingTimeInterval(-86400), repeticoes: .diario),
-            Habit(nome: "Exercise", cor: "Color2", dataInicio: Date(), repeticoes: .diario)
-        ]
-
         return CalendarView()
-            .environmentObject(exampleDataStore)
+            .environmentObject(HabitDataStore.sampleDataStore)
     }
 }

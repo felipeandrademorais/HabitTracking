@@ -95,12 +95,7 @@ struct HabitsTodayView: View {
 
 struct HabitsTodayView_Previews: PreviewProvider {
     static var previews: some View {
-        let exampleDataStore = HabitDataStore()
-        exampleDataStore.habits = [
-           
-        ]
-
         return HabitsTodayView()
-            .environmentObject(exampleDataStore)
+            .environmentObject(HabitDataStore.sampleDataStore)
     }
 }

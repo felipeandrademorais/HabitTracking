@@ -14,6 +14,7 @@ class HabitDataStore: ObservableObject {
     private let habitsKey = "habitsKey"
 
     init() {
+        UserDefaults.standard.removeObject(forKey: habitsKey)
         loadHabits()
     }
 
@@ -52,5 +53,36 @@ class HabitDataStore: ObservableObject {
     func removeHabit(_ habit: Habit) {
         habits.removeAll { $0.id == habit.id }
         saveHabits()
+    }
+    
+    func debugClearAllData() {
+        UserDefaults.standard.removeObject(forKey: habitsKey)
+        self.habits = []
+    }
+}
+
+extension HabitDataStore {
+    // Um dataStore pré-carregado com alguns hábitos de exemplo
+    static var sampleDataStore: HabitDataStore {
+        let store = HabitDataStore()
+        store.habits = [
+            Habit(
+                nome: "Read",
+                cor: "Color1",
+                dataInicio: Date().addingTimeInterval(-86400),
+                repeticoes: .diario,
+                datesCompleted: [],
+                icon: "⭐️"
+            ),
+            Habit(
+                nome: "Exercise",
+                cor: "Color2",
+                dataInicio: Date(),
+                repeticoes: .diario,
+                datesCompleted: [],
+                icon: "🔥"
+            )
+        ]
+        return store
     }
 }
