@@ -1,11 +1,3 @@
-//
-//  HabitDataStore.swift
-//  Habit Tracking
-//
-//  Created by Felipe Morais on 01/01/25.
-//
-
-
 import SwiftUI
 
 class HabitDataStore: ObservableObject {
@@ -36,7 +28,6 @@ class HabitDataStore: ObservableObject {
         }
     }
 
-    // CRUD básico
     func addHabit(_ habit: Habit) {
         habits.append(habit)
         saveHabits()
@@ -47,6 +38,16 @@ class HabitDataStore: ObservableObject {
             habits[index] = habit
             saveHabits()
         }
+    }
+    
+    func habits(for date: Date) -> [Habit] {
+        let startOfSelectedDate = Calendar.current.startOfDay(for: date)
+        
+        return habits.filter { habit in
+            let startOfHabitDate = Calendar.current.startOfDay(for: habit.dataInicio)
+            return startOfHabitDate <= startOfSelectedDate
+        }
+        .sorted { $0.datesCompleted.isEmpty && !$1.datesCompleted.isEmpty }
     }
 
     func removeHabit(_ habit: Habit) {
@@ -61,7 +62,6 @@ class HabitDataStore: ObservableObject {
 }
 
 extension HabitDataStore {
-    // Um dataStore pré-carregado com alguns hábitos de exemplo
     static var sampleDataStore: HabitDataStore {
         let store = HabitDataStore()
         store.habits = [

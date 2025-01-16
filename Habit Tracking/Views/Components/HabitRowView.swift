@@ -70,12 +70,10 @@ struct HabitRowView: View {
         let day = Calendar.current.startOfDay(for: selectedDate)
         
         if isCompletedOnSelectedDate {
-            // Se já está concluído, remove somente a data selecionada
             updatedHabit.datesCompleted.removeAll { date in
                 Calendar.current.startOfDay(for: date) == day
             }
         } else {
-            // Se ainda não está concluído, adiciona somente a data selecionada
             updatedHabit.datesCompleted.append(day)
         }
         

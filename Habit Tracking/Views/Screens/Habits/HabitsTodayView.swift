@@ -71,18 +71,7 @@ struct HabitsTodayView: View {
     }
 
     private var todaysHabits: [Habit] {
-        // Filtrar hábitos relevantes para a data selecionada
-        let filteredHabits = dataStore.habits.filter { habit in
-            switch habit.repeticoes {
-                case .diario:
-                    return habit.dataInicio <= selectedDate
-                case .semanal, .diasEspecificos:
-                    // Lógica adicional, se for semanal, etc.
-                    return habit.dataInicio <= selectedDate
-            }
-        }
-        
-        return filteredHabits.sorted {$0.datesCompleted.isEmpty && !$1.datesCompleted.isEmpty }
+        dataStore.habits(for: selectedDate)
     }
 
     private func deleteHabits(at offsets: IndexSet) {
