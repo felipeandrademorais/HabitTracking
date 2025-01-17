@@ -59,6 +59,14 @@ class HabitDataStore: ObservableObject {
         UserDefaults.standard.removeObject(forKey: habitsKey)
         self.habits = []
     }
+    
+    func createdHabitsCount() -> Int {
+        return habits.count
+    }
+
+    func completedHabitsCount() -> Int {
+        return habits.filter { !$0.datesCompleted.isEmpty }.count
+    }
 }
 
 extension HabitDataStore {

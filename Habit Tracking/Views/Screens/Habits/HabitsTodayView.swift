@@ -62,7 +62,7 @@ struct HabitsTodayView: View {
                     .shadow(radius: 5)
             }
             .padding(.trailing, 20)
-            .padding(.bottom, 45)
+            .padding(.bottom, 100)
             
         }.sheet(isPresented: $isShowingAddHabit) {
             AddHabitView()

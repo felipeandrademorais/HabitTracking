@@ -1,10 +1,3 @@
-//
-//  WeekView.swift
-//  Habit Tracking
-//
-//  Created by Felipe Morais on 13/01/25.
-//
-
 import SwiftUI
 
 
@@ -39,13 +32,12 @@ struct WeekView: View {
                             .fontWeight(isSelected(day) ? .bold : .regular)
                         ZStack {
                             Circle()
-                            //.fill(isSelected(day) ? Color.purple : Color.gray.opacity(0.2))
                                 .fill(.white)
                                 .frame(width: 32, height: 32)
                             
                             Text(dayNumber(for: day))
                                 .font(Font.custom("Poppins-Medium", size: 12))
-                                .foregroundColor(.fontSoft)
+                                .foregroundColor(.black)
                                 .fontWeight(isSelected(day) ? .bold : .regular)
                         }
                     }

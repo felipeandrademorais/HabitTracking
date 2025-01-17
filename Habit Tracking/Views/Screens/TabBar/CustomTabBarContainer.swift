@@ -19,7 +19,7 @@ struct CustomTabBarContainer<Content: View>: View {
     }
 
     var body: some View {
-        VStack(spacing: -20) {
+        VStack(spacing: -80) {
             ZStack {
                 ForEach(tabs) { tab in
                     if selectedTab == tab.tag {

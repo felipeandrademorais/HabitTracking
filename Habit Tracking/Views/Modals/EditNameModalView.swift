@@ -1,10 +1,3 @@
-//
-//  EditNameModalView.swift
-//  Habit Tracking
-//
-//  Created by Felipe Morais on 16/01/25.
-//
-
 import SwiftUI
 
 struct EditNameModalView: View {
@@ -22,7 +15,6 @@ struct EditNameModalView: View {
                 Section {
                     TextField("Seu nome", text: $newName)
                         .font(Font.custom("Poppins-Regular", size: 14))
-                        .background(Color.white)
                         .padding(.vertical, 10)
                         .overlay(
                             Rectangle()

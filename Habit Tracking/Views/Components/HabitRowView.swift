@@ -10,6 +10,7 @@ struct HabitRowView: View {
         HStack {
             Text(habit.icon)
                 .font(.system(size: 24))
+                .foregroundColor(.fontSoft)
             
             VStack(alignment: .leading) {
                 Text(habit.nome)
@@ -34,8 +35,9 @@ struct HabitRowView: View {
                             ? "checkmark.circle.fill"
                             : "circle"
                     )
-                    .foregroundColor(isCompletedOnSelectedDate ? .green : .black)
                     .font(Font.system(size: 20))
+                    .foregroundColor(isCompletedOnSelectedDate ? .green : .black)
+                    
                 }
                 .buttonStyle(PlainButtonStyle())
             } else {

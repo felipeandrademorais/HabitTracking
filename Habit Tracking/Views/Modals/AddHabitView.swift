@@ -30,12 +30,13 @@ struct AddHabitView: View {
                     .onTapGesture {
                         showIconPicker = true
                     }
-                    
-                    .popover(isPresented: $showIconPicker, arrowEdge: .bottom) {
+                    .sheet(isPresented: $showIconPicker) {
                         IconPickerView(
                             selectedIcon: $iconName,
                             isPresented: $showIconPicker
                         )
+                        .presentationDetents([.fraction(0.4)])
+                        .presentationDragIndicator(.visible)
                     }
                 }
                 .listRowBackground(Color.white.opacity(0.001))
@@ -44,12 +45,11 @@ struct AddHabitView: View {
                 Section {
                     TextField("Nome do hábito", text: $nome)
                         .font(Font.custom("Poppins-Regular", size: 14))
-                        .background(Color.white)
                         .padding(.vertical, 10)
                         .overlay(
                             Rectangle()
                                 .frame(height: 1.8)
-                                .foregroundColor(.blackSoft.opacity(0.4))
+                                .foregroundColor(.fontSoft)
                                 .padding(.top, 40),
                             alignment: .bottom
                         )

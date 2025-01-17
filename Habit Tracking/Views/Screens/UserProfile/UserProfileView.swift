@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct UserProfileView: View {
+    @EnvironmentObject private var habitDataStore: HabitDataStore
     @StateObject private var profileStore = UserProfileStore()
     @State private var showEditNameModal = false
     
@@ -41,14 +42,14 @@ struct UserProfileView: View {
                 HStack(alignment: .center, spacing: 8) {
                     Text(profileStore.user.name)
                         .font(.custom("Poppins-Medium", size: 20))
-                        .foregroundColor(.black)
+                        .foregroundColor(.fontSoft)
                         .onTapGesture {
                             showEditNameModal = true
                         }
                         .overlay(
                             Rectangle()
                                 .frame(height: 1.8)
-                                .foregroundColor(.blackSoft.opacity(0.4))
+                                .foregroundColor(.fontSoft.opacity(0.4))
                                 .padding(.top, 40),
                             alignment: .bottom
                         )
@@ -62,12 +63,12 @@ struct UserProfileView: View {
         VStack(spacing: 16) {
             Text("Estatísticas")
                 .font(.custom("Poppins-SemiBold", size: 16))
-                .foregroundColor(.black)
+                .foregroundColor(.fontSoft)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             HStack(spacing: 16) {
-                statCard(title: "Hábitos Criados", value: profileStore.createdHabitsCount())
-                statCard(title: "Habitos Completos", value: profileStore.completedHabitsCount())
+                statCard(title: "Hábitos Criados", value: habitDataStore.createdHabitsCount())
+                statCard(title: "Habitos Completos", value: habitDataStore.completedHabitsCount())
             }
         }
     }
@@ -92,30 +93,24 @@ struct UserProfileView: View {
         VStack(spacing: 16) {
             Text("Medalhas")
                 .font(.custom("Poppins-SemiBold", size: 16))
-                .foregroundColor(.black)
+                .foregroundColor(.fontSoft)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
-                    ForEach(profileStore.medals) { medal in
+                    ForEach(profileStore.getMedalsStatus(habitDataStore: habitDataStore), id: \.medal.id) { medalStatus in
                         VStack(spacing: 8) {
-                            Image(systemName: medal.icon)
+                            Image(systemName: medalStatus.medal.icon)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
-                                .foregroundColor(
-                                    profileStore.userMedals.contains(where: { $0.medalID == medal.id })
-                                    ? .yellow
-                                    : .gray.opacity(0.4)
-                                )
-                            Text(medal.name)
+                                .foregroundColor(medalStatus.isUnlocked ? .yellow : .fontSoft.opacity(0.4))
+                            Text(medalStatus.medal.name)
                                 .font(.custom("Poppins-Regular", size: 12))
-                                .foregroundColor(profileStore.userMedals.contains(where: { $0.medalID == medal.id })
-                                                 ? .fontSoft
-                                                 : .gray.opacity(0.4))
+                                .foregroundColor(medalStatus.isUnlocked ? .fontSoft : .fontSoft.opacity(0.4))
                         }
                         .padding()
-                        .background(Color.white)
+                        .background(.calendarBackground)
                         .cornerRadius(10)
                         .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 2)
                     }
@@ -133,5 +128,6 @@ struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
         UserProfileView()
             .environmentObject(UserProfileStore())
+            .environmentObject(HabitDataStore.sampleDataStore)
     }
 }

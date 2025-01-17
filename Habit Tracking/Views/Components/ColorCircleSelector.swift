@@ -17,7 +17,7 @@ struct ColorCircleSelector: View {
             .frame(width: 32, height: 32)
             .overlay(
                 Circle()
-                    .stroke(isSelected ? Color.black.opacity(0.5) : Color.white, lineWidth: 3)
+                    .stroke(isSelected ? Color.black.opacity(0.5) : Color.white.opacity(0.8), lineWidth: 3)
             )
             .padding(.trailing, 4)
             .onTapGesture {
