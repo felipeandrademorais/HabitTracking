@@ -44,6 +44,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Data/HabitDataStore.swift,
+				Enum/Repeticao.swift,
+				Models/Habit.swift,
 			);
 			target = 1E84FCC52D42E4B10066B118 /* WatchHabitTracking Watch App */;
 		};
