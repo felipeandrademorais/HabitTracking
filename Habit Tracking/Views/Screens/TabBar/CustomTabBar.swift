@@ -9,9 +9,7 @@ struct CustomTabBar: View {
             HStack {
                 ForEach(tabs) { tab in
                     Button(action: {
-                        withAnimation {
-                            selectedTab = tab.tag
-                        }
+                        selectedTab = tab.tag
                     }) {
                         VStack {
                             Image(systemName: tab.icon)
@@ -24,13 +22,15 @@ struct CustomTabBar: View {
                     }
                 }
             }
-            .frame(height: 80)
+            .frame(height: 100)
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(.calendarBackground)
                     .shadow(color: Color.black.opacity(0.2), radius: 6, x: 0, y: -8)
             )
-        }.zIndex(100)
+        }
+        .zIndex(100)
+        
     }
 }
 

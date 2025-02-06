@@ -26,15 +26,6 @@ struct ContentView: View {
     
 }
 
-struct ProfileTabView: View {
-    var body: some View {
-        VStack {
-            Text("Profile View")
-                .font(.largeTitle)
-        }
-    }
-}
-
 //Preview
 struct MetaFlowApp_Previews: PreviewProvider {
     static var previews: some View {

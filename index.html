@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Habit Tracking - Gerencie seus hábitos</title>
+        <style>
+            /* Reset básico e configurações globais */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background-color: #f4f4f4;
+            }
+            /* Header e navegação */
+            header {
+                background: #50b3a2;
+                color: #fff;
+                padding: 20px 0;
+            }
+            header .container {
+                width: 90%;
+                max-width: 1200px;
+                margin: auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            header nav a {
+                color: #fff;
+                text-decoration: none;
+                margin: 0 10px;
+                font-weight: bold;
+            }
+            /* Seção Hero */
+            .hero {
+                background: url("https://via.placeholder.com/1200x500")
+                    no-repeat center center/cover;
+                height: 500px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                text-align: center;
+            }
+            .hero h1 {
+                font-size: 3em;
+                margin-bottom: 20px;
+            }
+            .hero p {
+                font-size: 1.2em;
+                max-width: 800px;
+                margin: auto;
+            }
+            .cta-button {
+                background: #50b3a2;
+                color: #fff;
+                padding: 15px 30px;
+                font-size: 1.2em;
+                text-decoration: none;
+                border-radius: 5px;
+                margin-top: 20px;
+                display: inline-block;
+            }
+            /* Seções internas */
+            section {
+                padding: 40px 0;
+            }
+            .container {
+                width: 90%;
+                max-width: 1200px;
+                margin: auto;
+            }
+            /* Footer */
+            footer {
+                background: #333;
+                color: #fff;
+                padding: 20px 0;
+                text-align: center;
+            }
+            /* Responsividade */
+            @media (max-width: 768px) {
+                .hero h1 {
+                    font-size: 2.5em;
+                }
+                .hero p {
+                    font-size: 1em;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Cabeçalho com logo e navegação -->
+        <header>
+            <div class="container">
+                <h1>Habit Tracking</h1>
+                <nav>
+                    <a href="index.html">Início</a>
+                    <a href="privacy.html">Política de Privacidade</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Seção Hero -->
+        <section class="hero">
+            <div>
+                <h1>Gerencie seus hábitos com facilidade</h1>
+                <p>
+                    Habit Tracking é um aplicativo simples e gratuito que
+                    permite criar, acompanhar e gerenciar seus hábitos. Tudo é
+                    armazenado localmente, sem envio de dados para servidores,
+                    garantindo total privacidade.
+                </p>
+                <a class="cta-button" href="#">Saiba Mais</a>
+            </div>
+        </section>
+
+        <!-- Seção Sobre -->
+        <section>
+            <div class="container">
+                <h2>Sobre o Habit Tracking</h2>
+                <p>
+                    Nosso aplicativo foi desenvolvido para ajudar você a
+                    organizar sua rotina e alcançar seus objetivos diários. Com
+                    uma interface intuitiva, o Habit Tracking permite que você
+                    adicione, edite e remova hábitos com facilidade.
+                </p>
+                <ul>
+                    <li>
+                        <strong>Privacidade Total:</strong> Seus dados ficam
+                        armazenados localmente, sem qualquer compartilhamento.
+                    </li>
+                    <li>
+                        <strong>Gratuito:</strong> Sem custos, sem anúncios e
+                        sem coleta de dados.
+                    </li>
+                    <li>
+                        <strong>Fácil de Usar:</strong> Interface limpa e
+                        intuitiva para um gerenciamento prático dos seus
+                        hábitos.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Rodapé -->
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 Habit Tracking. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    </body>
+</html>

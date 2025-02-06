@@ -55,14 +55,14 @@ struct HabitsTodayView: View {
             }) {
                 Image(systemName: "plus")
                     .font(.title)
-                    .foregroundColor(.black)
+                    .foregroundColor(.white)
                     .padding()
-                    .background(.white)
+                    .background(.defaultDark)
                     .clipShape(Circle())
                     .shadow(radius: 5)
             }
             .padding(.trailing, 20)
-            .padding(.bottom, 100)
+            .padding(.bottom, 60)
             
         }.sheet(isPresented: $isShowingAddHabit) {
             AddHabitView()

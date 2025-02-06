@@ -3,6 +3,7 @@ import SwiftUI
 struct IconPickerView: View {
     @Binding var selectedIcon: String
     @Binding var isPresented: Bool
+
     
     private let emojis = [
         "⭐️", "🔥", "💖", "🎉", "🍀",

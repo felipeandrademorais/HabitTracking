@@ -9,7 +9,7 @@ struct HabitRowView: View {
     var body: some View {
         HStack {
             Text(habit.icon)
-                .font(.system(size: 24))
+                .font(.system(size: 28))
                 .foregroundColor(.fontSoft)
             
             VStack(alignment: .leading) {
@@ -35,7 +35,7 @@ struct HabitRowView: View {
                             ? "checkmark.circle.fill"
                             : "circle"
                     )
-                    .font(Font.system(size: 20))
+                    .font(Font.system(size: 24))
                     .foregroundColor(isCompletedOnSelectedDate ? .green : .black)
                     
                 }
@@ -53,11 +53,7 @@ struct HabitRowView: View {
         }
         .padding(.horizontal, 15)
         .padding(.vertical, 20)
-        .background(
-            isCompletedOnSelectedDate
-                ? Color(habit.cor).opacity(0.2)
-                : Color(habit.cor).opacity(0.7)
-        )
+        .background(Color(habit.cor))
         .cornerRadius(12)
     }
     
