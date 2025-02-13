@@ -1,18 +1,20 @@
 import SwiftUI
 
 struct TaskCycleCardView: View {
-    // Em vez de @State, agora usamos @Binding
     @Binding var selectedCycle: Repeticao
     @Binding var selectedDays: [String]
+    private var weekDays: [String] {
+        var calendar = Calendar.current
+        calendar.locale = Locale.current
+        return calendar.shortWeekdaySymbols.map { $0.capitalized }
+    }
 
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
-            // Título
             Text("Defina o ciclo do seu Hábito")
                 .font(Font.custom("Poppins-Regular", size: 14))
                 .foregroundColor(.fontSoft)
 
-            // Seleção do ciclo (Diário, Semanal, Mensal)
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.grayLigth)
@@ -20,14 +22,11 @@ struct TaskCycleCardView: View {
 
                 GeometryReader { geometry in
                     let segmentWidth = geometry.size.width / CGFloat(Repeticao.allCases.count)
-                    // Índice do ciclo selecionado
                     let index = Repeticao.allCases.firstIndex(of: selectedCycle) ?? 0
 
-                    // Retângulo de fundo que se move até o botão selecionado
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.color3)
                         .frame(width: segmentWidth, height: 40)
-                        // Desloca conforme o índice selecionado
                         .offset(x: segmentWidth * CGFloat(index))
                         .animation(.spring(), value: selectedCycle)
                 }
@@ -49,13 +48,12 @@ struct TaskCycleCardView: View {
                 }
             }
 
-            // Seleção de dias da semana
             HStack(spacing: 12) {
-                ForEach(days, id: \.self) { day in
+                ForEach(weekDays, id: \.self) { day in
                     Button(action: {
                         toggleDaySelection(day)
                     }) {
-                        Text(day)
+                        Text(day.capitalized)
                             .font(Font.custom("Poppins-Regular", size: 10))
                             .frame(width: 32, height: 32)
                             .background(
@@ -68,8 +66,8 @@ struct TaskCycleCardView: View {
             }
         }
         .padding(.vertical, 8)
-        .listRowInsets(EdgeInsets())       // Remove padding adicional do Form
-        .buttonStyle(PlainButtonStyle())   // Impede que a linha do Form "roube" o toque
+        .listRowInsets(EdgeInsets())
+        .buttonStyle(PlainButtonStyle())
     }
 
     private func toggleDaySelection(_ day: String) {
@@ -81,10 +79,8 @@ struct TaskCycleCardView: View {
     }
 }
 
-// Preview
 struct TaskCycleCardView_Previews: PreviewProvider {
     static var previews: some View {
-        // Usamos .constant(...) pois aqui no preview não temos um @State real
         TaskCycleCardView(
             selectedCycle: .constant(.weekly),
             selectedDays: .constant(["Seg", "Ter", "Qua", "Qui", "Sex"])

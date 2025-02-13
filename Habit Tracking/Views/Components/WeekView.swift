@@ -4,7 +4,7 @@ import SwiftUI
 struct WeekView: View {
     let calendar = Calendar.current
     let today = Date()
-    let onDaySelected: (Date) -> Void
+    let onDaySelected: (Date) -> Void    
 
     @State private var selectedDate: Date?
 
@@ -63,12 +63,14 @@ struct WeekView: View {
 
     func shortWeekdayName(for date: Date) -> String {
         let formatter = DateFormatter()
+        formatter.locale = Locale.current
         formatter.dateFormat = "E"
         return formatter.string(from: date).prefix(3).capitalized
     }
 
     func dayNumber(for date: Date) -> String {
         let formatter = DateFormatter()
+        formatter.locale = Locale.current
         formatter.dateFormat = "d"
         return formatter.string(from: date)
     }

@@ -27,15 +27,10 @@ struct CalendarDayCell: View {
 
     private func checkIfAllHabitsAreCompleted(on date: Date) -> Bool {
         let startOfSelectedDate = Calendar.current.startOfDay(for: date)
-        
-        // Filtrar hábitos ativos na data selecionada
         let activeHabits = dataStore.habits.filter {
             Calendar.current.startOfDay(for: $0.dataInicio) <= startOfSelectedDate
         }
-        
         guard !activeHabits.isEmpty else { return false }
-
-        // Verificar se todos os hábitos ativos estão concluídos
         return activeHabits.allSatisfy { $0.isCompleted(on: date) }
     }
 }

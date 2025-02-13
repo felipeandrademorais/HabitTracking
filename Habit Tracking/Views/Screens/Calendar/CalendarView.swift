@@ -38,14 +38,15 @@ extension CalendarView {
     }
 
     private var daysOfWeekView: some View {
+        let weekDays = Calendar.current.shortWeekdaySymbols
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
-            ForEach(days, id: \.self) { day in
-                Text(day)
-                    .font(Font.custom("Poppins-Thin", size: 12))
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.black)
-            }
-        }
+               ForEach(weekDays, id: \.self) { day in
+                   Text(day.capitalized)
+                       .font(Font.custom("Poppins-Thin", size: 12))
+                       .frame(maxWidth: .infinity)
+                       .foregroundColor(.black)
+               }
+           }
     }
 
     private var daysInMonthView: some View {
@@ -127,6 +128,7 @@ extension CalendarView {
 
     private func formattedDate(_ date: Date, format: String) -> String {
         let formatter = DateFormatter()
+        formatter.locale = Locale.current
         formatter.dateFormat = format
         return formatter.string(from: date)
     }
