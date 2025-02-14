@@ -9,7 +9,11 @@ struct CustomTabBar: View {
             HStack {
                 ForEach(tabs) { tab in
                     Button(action: {
-                        selectedTab = tab.tag
+                        if selectedTab != tab.tag {
+                            selectedTab = tab.tag
+                            let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                            impactMed.impactOccurred()
+                        }
                     }) {
                         VStack {
                             Image(systemName: tab.icon)
@@ -30,7 +34,6 @@ struct CustomTabBar: View {
             )
         }
         .zIndex(100)
-        
     }
 }
 
