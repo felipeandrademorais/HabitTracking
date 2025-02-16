@@ -8,13 +8,13 @@ struct CalendarDayCell: View {
     let onSelect: () -> Void
 
     var body: some View {
-        let dayCompleted = checkIfAllHabitsAreCompleted(on: date)
+        let completionOpacity = calculateCompletionOpacity(for: date)
 
         Text("\(Calendar.current.component(.day, from: date))")
             .frame(minWidth: 40, minHeight: 40)
             .background(
                 isSelected ? Color.blueSoft :
-                dayCompleted ? Color.green.opacity(0.2) : Color.white.opacity(0.001)
+                Color.green.opacity(completionOpacity)
             )
             .cornerRadius(20)
             .onTapGesture {
@@ -22,15 +22,20 @@ struct CalendarDayCell: View {
             }
             .foregroundColor(.fontSoft)
             .font(Font.custom("Poppins-Medium", size: 16))
-            
     }
 
-    private func checkIfAllHabitsAreCompleted(on date: Date) -> Bool {
+    /// Calcula a opacidade da cor de fundo com base na porcentagem de hábitos completos no dia.
+    private func calculateCompletionOpacity(for date: Date) -> Double {
         let startOfSelectedDate = Calendar.current.startOfDay(for: date)
+
         let activeHabits = dataStore.habits.filter {
             Calendar.current.startOfDay(for: $0.dataInicio) <= startOfSelectedDate
         }
-        guard !activeHabits.isEmpty else { return false }
-        return activeHabits.allSatisfy { $0.isCompleted(on: date) }
+        
+        let totalHabits = activeHabits.count
+        let completedHabits = activeHabits.filter { $0.isCompleted(on: date) }.count
+
+        // Retorna um valor entre 0.0 (nenhum completo) e 1.0 (todos completos)
+        return totalHabits > 0 ? Double(completedHabits) / Double(totalHabits) : 0.001
     }
 }
