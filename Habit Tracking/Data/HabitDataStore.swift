@@ -42,10 +42,24 @@ class HabitDataStore: ObservableObject {
     
     func habits(for date: Date) -> [Habit] {
         let startOfSelectedDate = Calendar.current.startOfDay(for: date)
-        
+        let calendar = Calendar.current
+        let weekday = calendar.component(.weekday, from: date)
+
         return habits.filter { habit in
-            let startOfHabitDate = Calendar.current.startOfDay(for: habit.dataInicio)
-            return startOfHabitDate <= startOfSelectedDate
+            let startOfHabitDate = calendar.startOfDay(for: habit.dataInicio)
+
+            switch habit.repeticoes {
+            case .daily:
+                return startOfHabitDate <= startOfSelectedDate
+
+            case .weekly:
+                return startOfHabitDate <= startOfSelectedDate && habit.diasDoHabito.contains(weekday)
+
+            case .monthly:
+                let startDay = calendar.component(.day, from: startOfHabitDate)
+                let selectedDay = calendar.component(.day, from: startOfSelectedDate)
+                return startOfHabitDate <= startOfSelectedDate && startDay == selectedDay
+            }
         }
         .sorted { $0.datesCompleted.isEmpty && !$1.datesCompleted.isEmpty }
     }

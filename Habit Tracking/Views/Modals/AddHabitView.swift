@@ -11,7 +11,7 @@ struct AddHabitView: View {
     @State private var iconName: String = "⭐️"
     @State private var showIconPicker: Bool = false
     @State private var selectedCycle: Repeticao = .weekly
-    @State private var selectedDays: [String] = ["Seg", "Ter", "Qua", "Qui", "Sex"]
+    @State private var selectedDays: [Int] = [1, 2, 3, 4, 5]
 
     var body: some View {
         ZStack {
@@ -106,7 +106,8 @@ struct AddHabitView: View {
             nome: nome,
             cor: colorName,
             dataInicio: dataInicio,
-            repeticoes: repeticao,
+            repeticoes: selectedCycle,
+            diasDoHabito: selectedDays,
             icon: iconName
         )
 

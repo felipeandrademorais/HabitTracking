@@ -2,12 +2,7 @@ import SwiftUI
 
 struct TaskCycleCardView: View {
     @Binding var selectedCycle: Repeticao
-    @Binding var selectedDays: [String]
-    private var weekDays: [String] {
-        var calendar = Calendar.current
-        calendar.locale = Locale.current
-        return calendar.shortWeekdaySymbols.map { $0.capitalized }
-    }
+    @Binding var selectedDays: [Int]
 
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
@@ -49,15 +44,15 @@ struct TaskCycleCardView: View {
             }
 
             HStack(spacing: 12) {
-                ForEach(weekDays, id: \.self) { day in
+                ForEach(WeekDayHelper.localizedWeekdays(), id: \.dayNumber) { day in
                     Button(action: {
                         toggleDaySelection(day)
                     }) {
-                        Text(day.capitalized)
+                        Text(day.dayName.capitalized)
                             .font(Font.custom("Poppins-Regular", size: 10))
                             .frame(width: 32, height: 32)
                             .background(
-                                selectedDays.contains(day) ? Color.color3 : Color.grayLigth
+                                selectedDays.contains(day.dayNumber) ? Color.color3 : Color.grayLigth
                             )
                             .foregroundColor(.black)
                             .clipShape(Circle())
@@ -70,21 +65,11 @@ struct TaskCycleCardView: View {
         .buttonStyle(PlainButtonStyle())
     }
 
-    private func toggleDaySelection(_ day: String) {
-        if selectedDays.contains(day) {
-            selectedDays.removeAll { $0 == day }
+    private func toggleDaySelection(_ day: (dayNumber: Int, dayName: String)) {
+        if selectedDays.contains(day.dayNumber) {
+            selectedDays.removeAll { $0 == day.dayNumber }
         } else {
-            selectedDays.append(day)
+            selectedDays.append(day.dayNumber)
         }
-    }
-}
-
-struct TaskCycleCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskCycleCardView(
-            selectedCycle: .constant(.weekly),
-            selectedDays: .constant(["Seg", "Ter", "Qua", "Qui", "Sex"])
-        )
-        .previewLayout(.sizeThatFits)
     }
 }

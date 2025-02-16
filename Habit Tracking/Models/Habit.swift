@@ -6,6 +6,7 @@ struct Habit: Identifiable, Codable {
     var cor: String
     var dataInicio: Date
     var repeticoes: Repeticao
+    var diasDoHabito: [Int]
     var datesCompleted: [Date]
     var icon: String
 
@@ -15,6 +16,7 @@ struct Habit: Identifiable, Codable {
         cor: String,
         dataInicio: Date,
         repeticoes: Repeticao,
+        diasDoHabito: [Int] = [],
         datesCompleted: [Date] = [],
         icon: String
     ) {
@@ -23,6 +25,7 @@ struct Habit: Identifiable, Codable {
         self.cor = cor
         self.dataInicio = dataInicio
         self.repeticoes = repeticoes
+        self.diasDoHabito = diasDoHabito
         self.datesCompleted = datesCompleted
         self.icon = icon
     }
