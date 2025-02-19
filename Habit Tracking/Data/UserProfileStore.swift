@@ -1,7 +1,7 @@
 import SwiftUI
 
 class UserProfileStore: ObservableObject {
-    @Published var user: User = User(id: UUID(), name: "John Doe", avatar: "person.circle.fill")
+    @Published var user: User = User(id: UUID(), name: "Click para alterar o seu nome", avatar: "person.circle.fill")
     @Published var medals: [Medal] = [
             Medal(id: UUID(), name: "Iniciante", description: "Complete 1 hábito", icon: "star.fill", unlockCondition: "Complete 1 hábito", criteria: .habitsQuantity(1)),
             Medal(id: UUID(), name: "Progresso", description: "Complete 10 hábitos", icon: "trophy.fill", unlockCondition: "Complete 10 hábitos", criteria: .habitsQuantity(10))
@@ -65,29 +65,28 @@ class UserProfileStore: ObservableObject {
         case .habitsQuantity(let quantity):
             return completedHabitsCount() >= quantity
         case .custom(_):
-            // Para regras customizadas, implementar aqui
             return false
         }
     }
     
     /// Retorna uma lista de medalhas com status habilitado/desabilitado
-        func getMedalsStatus(habitDataStore: HabitDataStore) -> [MedalStatus] {
-            return medals.map { medal in
-                let isUnlocked = validateMedal(medal, habitDataStore: habitDataStore)
-                return MedalStatus(medal: medal, isUnlocked: isUnlocked)
-            }
+    func getMedalsStatus(habitDataStore: HabitDataStore) -> [MedalStatus] {
+        return medals.map { medal in
+            let isUnlocked = validateMedal(medal, habitDataStore: habitDataStore)
+            return MedalStatus(medal: medal, isUnlocked: isUnlocked)
         }
+    }
 
-        /// Valida se uma medalha deve ser habilitada
-        private func validateMedal(_ medal: Medal, habitDataStore: HabitDataStore) -> Bool {
-            switch medal.criteria {
-            case .habitsQuantity(let quantity):
-                return habitDataStore.completedHabitsCount() >= quantity
-            case .custom(_):
-                // Regras customizadas podem ser adicionadas aqui no futuro
-                return false
-            }
+    /// Valida se uma medalha deve ser habilitada
+    private func validateMedal(_ medal: Medal, habitDataStore: HabitDataStore) -> Bool {
+        switch medal.criteria {
+        case .habitsQuantity(let quantity):
+            return habitDataStore.completedHabitsCount() >= quantity
+        case .custom(_):
+            // Regras customizadas podem ser adicionadas aqui no futuro
+            return false
         }
+    }
 }
 
 struct MedalStatus {
