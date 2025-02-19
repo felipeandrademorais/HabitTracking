@@ -1,9 +1,3 @@
-//
-//  WeekDayHelper.swift
-//  Habit Tracking
-//
-//  Created by Felipe Morais on 16/02/25.
-//
 import SwiftUI
 
 struct WeekDayHelper {

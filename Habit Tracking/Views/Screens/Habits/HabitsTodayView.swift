@@ -1,10 +1,3 @@
-//
-//  HabitsTodayView.swift
-//  Habit Tracking
-//
-//  Created by Felipe Morais on 01/01/25.
-//
-
 import SwiftUI
 
 struct HabitsTodayView: View {

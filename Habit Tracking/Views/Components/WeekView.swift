@@ -1,6 +1,5 @@
 import SwiftUI
 
-
 struct WeekView: View {
     let calendar = Calendar.current
     let today = Date()

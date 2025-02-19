@@ -9,7 +9,7 @@ struct EditNameModalView: View {
             Color.color2.ignoresSafeArea()
             
             Form {
-                Text("Edit Name")
+                Text("Editar Nome")
                     .font(Font.custom("Poppins-Regular", size: 16))
                 
                 Section {

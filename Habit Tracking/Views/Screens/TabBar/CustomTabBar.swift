@@ -44,9 +44,9 @@ struct CustomTabBar_Previews: PreviewProvider {
         CustomTabBar(
             selectedTab: $selectedTab,
             tabs: [
-                TabItem(tag: "calendar", icon: "calendar", content: AnyView(Text("Calendar"))),
-                TabItem(tag: "habits", icon: "checklist.checked", content: AnyView(Text("Habits"))),
-                TabItem(tag: "profile", icon: "person", content: AnyView(Text("Profile")))
+                TabItem(tag: "calendar", icon: "calendar", content: AnyView(Text("Calendario"))),
+                TabItem(tag: "habits", icon: "checklist.checked", content: AnyView(Text("Habitos"))),
+                TabItem(tag: "profile", icon: "person", content: AnyView(Text("Perfil")))
             ]
         )
     }

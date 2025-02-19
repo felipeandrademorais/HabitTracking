@@ -37,9 +37,9 @@ struct CustomTabBarContainer<Content: View>: View {
 struct CustomTabBarContainer_Previews: PreviewProvider {
     static var previews: some View {
         CustomTabBarContainer(tabs: [
-            TabItem(tag: "calendar", icon: "calendar", content: AnyView(Text("Calendar"))),
-            TabItem(tag: "habits", icon: "checklist.checked", content: AnyView(Text("Habits"))),
-            TabItem(tag: "profile", icon: "person", content: AnyView(Text("Profile")))
+            TabItem(tag: "calendar", icon: "calendar", content: AnyView(Text("Calendario"))),
+            TabItem(tag: "habits", icon: "checklist.checked", content: AnyView(Text("Habitos"))),
+            TabItem(tag: "profile", icon: "person", content: AnyView(Text("Perfil")))
         ]) {
             CalendarView()
         }
