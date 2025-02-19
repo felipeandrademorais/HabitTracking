@@ -30,6 +30,8 @@ struct TaskCycleCardView: View {
                 HStack(spacing: 0) {
                     ForEach(Repeticao.allCases, id: \.self) { cycle in
                         Button(action: {
+                            let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                            impactMed.impactOccurred()
                             withAnimation(.spring()) {
                                 selectedCycle = cycle
                             }
@@ -46,6 +48,8 @@ struct TaskCycleCardView: View {
             HStack(spacing: 12) {
                 ForEach(WeekDayHelper.localizedWeekdays(), id: \.dayNumber) { day in
                     Button(action: {
+                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                        impactMed.impactOccurred()
                         toggleDaySelection(day)
                     }) {
                         Text(day.dayName.capitalized)

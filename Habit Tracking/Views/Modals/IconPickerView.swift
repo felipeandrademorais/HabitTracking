@@ -26,6 +26,8 @@ struct IconPickerView: View {
                             )
                     }
                     .onTapGesture {
+                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                        impactMed.impactOccurred()
                         selectedIcon = emoji
                         isPresented = false
                     }

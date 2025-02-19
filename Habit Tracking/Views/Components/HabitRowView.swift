@@ -27,6 +27,8 @@ struct HabitRowView: View {
             if showCheckbox {
                 Button(
                     action: {
+                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                        impactMed.impactOccurred()
                         toggleCompletion(for: habit)
                     }
                 ) {

@@ -98,6 +98,9 @@ struct AddHabitView: View {
     }
 
     private func addHabit() {
+        let impactMed = UIImpactFeedbackGenerator(style: .medium)
+        impactMed.impactOccurred()
+        
         // Converte a cor para o nome do asset
         guard let index = predefinedColors.firstIndex(of: cor) else { return }
         let colorName = "color\(index + 1)"

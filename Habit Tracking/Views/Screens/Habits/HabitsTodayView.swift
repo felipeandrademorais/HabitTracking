@@ -4,7 +4,7 @@ struct HabitsTodayView: View {
     @EnvironmentObject var dataStore: HabitDataStore
     @State private var selectedDate: Date = Date()
     @State private var isShowingAddHabit: Bool = false
-
+    
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             VStack {
@@ -28,12 +28,12 @@ struct HabitsTodayView: View {
                                 habit: habit,
                                 selectedDate: selectedDate
                             )
-                                .padding(.vertical, 8)
-                                .listRowInsets(EdgeInsets())
-                                .listRowBackground(
-                                    Color.white.opacity(0.001)
-                                )
-                                .listRowSeparator(.hidden)
+                            .padding(.vertical, 8)
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(
+                                Color.white.opacity(0.001)
+                            )
+                            .listRowSeparator(.hidden)
                         }
                         .onDelete(perform: deleteHabits)
                     }
@@ -44,6 +44,8 @@ struct HabitsTodayView: View {
             }
             
             Button(action: {
+                let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                impactMed.impactOccurred() 
                 isShowingAddHabit = true
             }) {
                 Image(systemName: "plus")
@@ -62,11 +64,11 @@ struct HabitsTodayView: View {
                 .environmentObject(dataStore)
         }
     }
-
+    
     private var todaysHabits: [Habit] {
         dataStore.habits(for: selectedDate)
     }
-
+    
     private func deleteHabits(at offsets: IndexSet) {
         offsets.forEach { index in
             let habit = todaysHabits[index]
