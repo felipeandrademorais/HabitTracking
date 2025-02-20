@@ -4,6 +4,7 @@ struct HabitsTodayView: View {
     @EnvironmentObject var dataStore: HabitDataStore
     @State private var selectedDate: Date = Date()
     @State private var isShowingAddHabit: Bool = false
+    @State private var habitToEdit: Habit? = nil
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -34,6 +35,32 @@ struct HabitsTodayView: View {
                                 Color.white.opacity(0.001)
                             )
                             .listRowSeparator(.hidden)
+                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                Button(role: .destructive) {
+                                    dataStore.removeHabit(habit)
+                                } label: {
+                                    ZStack {
+                                        VStack(spacing: 4) {
+                                            Image(systemName: "trash")
+                                                .font(.system(size: 18))
+                                                .foregroundColor(.white)
+                                        }
+                                    }
+                                }
+                                .tint(.red)
+                                Button {
+                                    habitToEdit = habit
+                                } label: {
+                                    ZStack {
+                                        VStack(spacing: 4) {
+                                            Image(systemName: "applepencil.gen1")
+                                                .font(.system(size: 22))
+                                                .foregroundColor(.white)
+                                        }
+                                        .tint(.color2)
+                                    }
+                                }
+                            }
                         }
                         .onDelete(perform: deleteHabits)
                     }
@@ -45,7 +72,7 @@ struct HabitsTodayView: View {
             
             Button(action: {
                 let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                impactMed.impactOccurred() 
+                impactMed.impactOccurred()
                 isShowingAddHabit = true
             }) {
                 Image(systemName: "plus")
@@ -59,9 +86,20 @@ struct HabitsTodayView: View {
             .padding(.trailing, 20)
             .padding(.bottom, 60)
             
-        }.sheet(isPresented: $isShowingAddHabit) {
-            AddHabitView()
-                .environmentObject(dataStore)
+        }
+        // Modal para adicionar novo hábito
+        .sheet(isPresented: $isShowingAddHabit) {
+            NavigationView {
+                ModalHabitView()
+                    .environmentObject(dataStore)
+            }
+        }
+        // Modal para editar hábito (disparado ao atribuir um valor a habitToEdit)
+        .sheet(item: $habitToEdit) { habit in
+            NavigationView {
+                ModalHabitView(habit: habit)
+                    .environmentObject(dataStore)
+            }
         }
     }
     

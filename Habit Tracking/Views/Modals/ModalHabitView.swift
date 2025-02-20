@@ -1,18 +1,42 @@
 import SwiftUI
 
-struct AddHabitView: View {
+struct ModalHabitView: View {
     @EnvironmentObject var dataStore: HabitDataStore
     @Environment(\.presentationMode) var presentationMode
-
-    @State private var nome: String = ""
-    @State private var cor: Color = predefinedColors.first ?? .clear
-    @State private var dataInicio = Date()
-    @State private var repeticao: Repeticao = .daily
-    @State private var iconName: String = "⭐️"
+    
+    private let isEdit: Bool
+    private let habitToEdit: Habit?
+    
+    @State private var nome: String
+    @State private var cor: Color
+    @State private var dataInicio: Date
+    @State private var selectedCycle: Repeticao
+    @State private var selectedDays: [Int]
+    @State private var iconName: String
     @State private var showIconPicker: Bool = false
-    @State private var selectedCycle: Repeticao = .weekly
-    @State private var selectedDays: [Int] = [1, 2, 3, 4, 5]
-
+    
+    init(habit: Habit? = nil) {
+        self.habitToEdit = habit
+        self.isEdit = habit != nil
+        
+        _nome = State(initialValue: habit?.nome ?? "")
+        
+        if let habit = habit {
+            if let index = predefinedColors.firstIndex(where: { "color\((predefinedColors.firstIndex(of: $0) ?? 0) + 1)" == habit.cor }) {
+                _cor = State(initialValue: predefinedColors[index])
+            } else {
+                _cor = State(initialValue: predefinedColors.first ?? .clear)
+            }
+        } else {
+            _cor = State(initialValue: predefinedColors.first ?? .clear)
+        }
+        
+        _dataInicio = State(initialValue: habit?.dataInicio ?? Date())
+        _selectedCycle = State(initialValue: habit?.repeticoes ?? .daily)
+        _selectedDays = State(initialValue: habit?.diasDoHabito ?? [1, 2, 3, 4, 5])
+        _iconName = State(initialValue: habit?.icon ?? "⭐️")
+    }
+    
     var body: some View {
         ZStack {
             Color.color2.ignoresSafeArea()
@@ -22,7 +46,7 @@ struct AddHabitView: View {
                     VStack(spacing: 2) {
                         Text(iconName)
                             .font(.system(size: 60))
-
+                        
                         Text("Clique no ícone para alterá-lo")
                             .font(Font.custom("Poppins-Regular", size: 10))
                     }
@@ -41,7 +65,6 @@ struct AddHabitView: View {
                 }
                 .listRowBackground(Color.white.opacity(0.001))
                 
-                
                 Section {
                     TextField("Nome do hábito", text: $nome)
                         .font(Font.custom("Poppins-Regular", size: 14))
@@ -56,7 +79,6 @@ struct AddHabitView: View {
                         .padding(.bottom, 12)
                 }
                 
-                // Seção do TaskCycleCardView
                 Section {
                     TaskCycleCardView(
                         selectedCycle: $selectedCycle,
@@ -65,7 +87,6 @@ struct AddHabitView: View {
                     .padding()
                 }
                 
-                // Seção das cores
                 Section {
                     LazyHGrid(
                         rows: [GridItem(.fixed(40), spacing: 20)],
@@ -85,9 +106,8 @@ struct AddHabitView: View {
                 }
                 .listRowBackground(Color.white.opacity(0.001))
                 
-                // Botão para adicionar Hábito
-                Button(action: addHabit) {
-                    Text("Adicionar")
+                Button(action: addOrUpdateHabit) {
+                    Text(isEdit ? "Salvar" : "Adicionar")
                         .frame(maxWidth: .infinity)
                         .foregroundStyle(.fontSoft)
                 }
@@ -96,36 +116,47 @@ struct AddHabitView: View {
         }
         .scrollContentBackground(.hidden)
     }
-
-    private func addHabit() {
+    
+    private func addOrUpdateHabit() {
         let impactMed = UIImpactFeedbackGenerator(style: .medium)
         impactMed.impactOccurred()
         
-        // Converte a cor para o nome do asset
         guard let index = predefinedColors.firstIndex(of: cor) else { return }
         let colorName = "color\(index + 1)"
-
-        let newHabit = Habit(
-            nome: nome,
-            cor: colorName,
-            dataInicio: dataInicio,
-            repeticoes: selectedCycle,
-            diasDoHabito: selectedDays,
-            icon: iconName
-        )
-
-        dataStore.addHabit(newHabit)
+        
+        if isEdit, let habit = habitToEdit {
+            let updatedHabit = Habit(
+                id: habit.id,
+                nome: nome,
+                cor: colorName,
+                dataInicio: dataInicio,
+                repeticoes: selectedCycle,
+                diasDoHabito: selectedDays,
+                icon: iconName
+            )
+            dataStore.updateHabit(updatedHabit)
+        } else {
+            let newHabit = Habit(
+                nome: nome,
+                cor: colorName,
+                dataInicio: dataInicio,
+                repeticoes: selectedCycle,
+                diasDoHabito: selectedDays,
+                icon: iconName
+            )
+            dataStore.addHabit(newHabit)
+        }
         presentationMode.wrappedValue.dismiss()
     }
 }
 
 // MARK: - Preview
-struct AddHabitView_Previews: PreviewProvider {
+struct ModalHabitView_Previews: PreviewProvider {
     static var previews: some View {
         let dataStore = HabitDataStore()
-
+        
         return NavigationView {
-            AddHabitView()
+            ModalHabitView()
                 .environmentObject(dataStore)
         }
     }

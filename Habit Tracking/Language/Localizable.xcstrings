@@ -2,7 +2,20 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
     },
     "Adicionar" : {
       "extractionState" : "manual",
@@ -158,7 +171,20 @@
       }
     },
     "Nome do hábito" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Name"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome do hábito"
+          }
+        }
+      }
     },
     "Perfil" : {
       "extractionState" : "manual",
@@ -173,6 +199,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Perfil"
+          }
+        }
+      }
+    },
+    "Salvar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salvar"
           }
         }
       }
