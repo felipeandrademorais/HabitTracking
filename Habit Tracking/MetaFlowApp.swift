@@ -3,12 +3,17 @@ import SwiftUI
 @main
 struct MetaFlowApp: App {
     @StateObject private var dataStore = HabitDataStore()
+    @StateObject private var versionChecker = VersionChecker.shared
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(dataStore)
-                .font(Font.custom("Poppins-Regular", size: 16))
+            ZStack {
+                ContentView()
+                    .environmentObject(dataStore)
+                    .font(Font.custom("Poppins-Regular", size: 16))
+                
+                UpdateAlertView()
+            }
         }
     }
 }

@@ -17,6 +17,22 @@
         }
       }
     },
+    "A new version of the app is available. Please update to continue using the app." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A new version of the app is available. Please update to continue using the app."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uma nova versão do aplicativo está disponível. Atualize para continuar usando o aplicativo."
+          }
+        }
+      }
+    },
     "Adicionar" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -232,6 +248,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seu nome"
+          }
+        }
+      }
+    },
+    "Update Now" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualizar Agora"
+          }
+        }
+      }
+    },
+    "Update Required" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualização Obrigatória"
           }
         }
       }
