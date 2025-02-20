@@ -28,7 +28,7 @@ struct EditNameModalView: View {
                 }
                 
                 Button(action: addName) {
-                    Text("Adicionar")
+                    Text("Confirmar")
                         .frame(maxWidth: .infinity)
                         .foregroundStyle(.fontSoft)
                 }
