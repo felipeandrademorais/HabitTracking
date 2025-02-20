@@ -13,9 +13,9 @@ struct UserProfileView: View {
                     VStack(spacing: 24) {
                         ProfileSectionView(profileStore: profileStore, showEditNameModal: $showEditNameModal)
                         Spacer()
+                        YearCalendarView(habitDataStore: habitDataStore)
                         StatsSectionView(habitDataStore: habitDataStore)
                         MedalsSectionView(profileStore: profileStore, habitDataStore: habitDataStore)
-
                     }
                     .padding()
                 }

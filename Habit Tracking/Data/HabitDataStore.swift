@@ -81,6 +81,19 @@ class HabitDataStore: ObservableObject {
     func completedHabitsCount() -> Int {
         return habits.filter { !$0.datesCompleted.isEmpty }.count
     }
+    
+    func getCompletionRateForDate(_ date: Date) -> Double {
+        let startOfSelectedDate = Calendar.current.startOfDay(for: date)
+        
+        let activeHabits = habits.filter {
+            Calendar.current.startOfDay(for: $0.dataInicio) <= startOfSelectedDate
+        }
+        
+        let totalHabits = activeHabits.count
+        let completedHabits = activeHabits.filter { $0.isCompleted(on: date) }.count
+        
+        return totalHabits > 0 ? Double(completedHabits) / Double(totalHabits) : 0.001
+    }
 }
 
 extension HabitDataStore {
