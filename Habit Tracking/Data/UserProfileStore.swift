@@ -35,7 +35,12 @@ class UserProfileStore: ObservableObject {
     
     func updateUserName(_ newName: String) {
            user.name = newName
-       saveUser()
+           saveUser()
+    }
+    
+    func updateUserAvatar(_ newAvatar: String) {
+        user.avatar = newAvatar
+        saveUser()
     }
 
     func addMedalToUser(medal: Medal) {

@@ -3,6 +3,7 @@ import SwiftUI
 struct EditNameModalView: View {
     @EnvironmentObject var profileStore: UserProfileStore
     @State private var newName: String = ""
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         ZStack {
@@ -42,5 +43,6 @@ struct EditNameModalView: View {
     
     private func addName() {
         profileStore.updateUserName(newName)
+        dismiss()
     }
 }

@@ -3,15 +3,19 @@ import SwiftUI
 struct ProfileSectionView: View {
     @ObservedObject var profileStore: UserProfileStore
     @Binding var showEditNameModal: Bool
+    @State private var showEditAvatarModal = false
     
     var body: some View {
         Section {
             VStack(spacing: 16) {
-                Image(systemName: profileStore.user.avatar)
+                Image(profileStore.user.avatar.isEmpty ? "no-avatar" : profileStore.user.avatar)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 100, height: 100)
                     .clipShape(Circle())
+                    .onTapGesture {
+                        showEditAvatarModal = true
+                    }
                 
                 HStack(alignment: .center, spacing: 8) {
                     Text(profileStore.user.name)
@@ -29,6 +33,12 @@ struct ProfileSectionView: View {
                         )
                 }
             }
+        }
+        .sheet(isPresented: $showEditAvatarModal) {
+            EditAvatarModalView()
+                .environmentObject(profileStore)
+                .presentationDetents([.fraction(0.5)])
+                .presentationDragIndicator(.visible)
         }
     }
 }
