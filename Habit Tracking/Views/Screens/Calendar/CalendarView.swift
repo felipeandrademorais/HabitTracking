@@ -27,12 +27,20 @@ struct CalendarView: View {
 extension CalendarView {
     private var headerView: some View {
         HStack {
+            Button(action: previousMonth) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.fontSoft)
+            }
             Spacer()
             Text(formattedDate(currentMonth, format: "LLLL"))
                 .font(Font.custom("Poppins-Regular", size: 16))
             Spacer()
             Text(formattedDate(currentMonth, format: "yyyy"))
                 .font(Font.custom("Poppins-Regular", size: 12))
+            Button(action: nextMonth) {
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.fontSoft)
+            }
         }
         .padding()
     }
