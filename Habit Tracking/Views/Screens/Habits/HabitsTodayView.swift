@@ -13,7 +13,7 @@ struct HabitsTodayView: View {
                 WeekView(onDaySelected: { date in
                     selectedDate = date
                 })
-                .frame(maxHeight: 85)
+                .frame(maxHeight: 95)
                 
                 if (todaysHabits.isEmpty) {
                     Spacer()
@@ -98,6 +98,11 @@ struct HabitsTodayView: View {
                     )
                     .transition(.opacity)
                     .zIndex(1000)
+                    .onTapGesture {
+                        withAnimation(.easeOut(duration: 0.3)) {
+                            showAnimation = false
+                        }
+                    }
             }
             Button(action: {
                 let impactMed = UIImpactFeedbackGenerator(style: .medium)

@@ -19,7 +19,7 @@ struct CalendarView: View {
             habitsListView(for: selectedDate)
         }
         .padding()
-        .background(Color.blue.opacity(0.2))
+        .background(Color.blueSoft)
     }
 }
 
@@ -76,9 +76,10 @@ extension CalendarView {
     private func habitsListView(for date: Date) -> some View {
         let habitsForSelectedDate = dataStore.habits(for: date)
         VStack(spacing: 20) {
-            Text(formattedDate(date, format: "MMMM d, EEEE"))
+            Text(formattedDate(date, format: "MMMM d, EEEE").capitalized)
                 .font(.headline)
                 .foregroundColor(.fontSoft)
+                .padding(.vertical)
 
             if habitsForSelectedDate.isEmpty {
                 Text("Nenhum Hábito para essa data")
@@ -100,7 +101,6 @@ extension CalendarView {
             
             Spacer()
         }
-        .padding()
     }
 }
 
@@ -135,11 +135,11 @@ extension CalendarView {
     }
 
     private func formattedDate(_ date: Date, format: String) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale.current
-        formatter.dateFormat = format
-        return formatter.string(from: date)
-    }
+            let formatter = DateFormatter()
+            formatter.locale = Locale.current
+            formatter.dateFormat = format
+            return formatter.string(from: date)
+        }
 }
 
 struct CalendarView_Previews: PreviewProvider {

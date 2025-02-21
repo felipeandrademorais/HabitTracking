@@ -5,7 +5,7 @@ struct EditAvatarModalView: View {
     @Environment(\.dismiss) var dismiss
     @State private var selectedAvatar: String = ""
     
-    private let avatarOptions = ["avatar1", "avatar2", "avatar3", "avatar4"]
+    private let avatarOptions = ["avatar1", "avatar2", "avatar3", "avatar4", "avatar5"]
     
     var body: some View {
         ZStack {

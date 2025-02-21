@@ -40,7 +40,7 @@ struct WeekView: View {
                 
                 HStack(spacing: 8) {
                     ForEach(weekDays, id: \.self) { day in
-                        VStack(spacing: 4) {
+                        VStack(spacing: 6) {
                             Text(shortWeekdayName(for: day))
                                 .font(Font.custom("Poppins-Medium", size: 12))
                                 .foregroundColor(.fontSoft)
@@ -56,7 +56,7 @@ struct WeekView: View {
                                     .fontWeight(isSelected(day) ? .bold : .regular)
                             }
                         }
-                        .padding(6)
+                        .padding(8)
                         .background(
                             isSelected(day) ? .capsulePrimary : .capsuleSecundary
                         )

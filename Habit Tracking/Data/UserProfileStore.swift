@@ -1,7 +1,7 @@
 import SwiftUI
 
 class UserProfileStore: ObservableObject {
-    @Published var user: User = User(id: UUID(), name: "Click para alterar", avatar: "person.circle.fill")
+    @Published var user: User = User(id: UUID(), name: "Click para alterar", avatar: "no-avatar")
     @Published var medals: [Medal] = [
             Medal(id: UUID(), name: "Iniciante", description: "Complete 1 hábito", icon: "star.fill", unlockCondition: "Complete 1 hábito", criteria: .habitsQuantity(1)),
             Medal(id: UUID(), name: "Progresso", description: "Complete 10 hábitos", icon: "trophy.fill", unlockCondition: "Complete 10 hábitos", criteria: .habitsQuantity(10))
