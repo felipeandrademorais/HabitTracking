@@ -97,7 +97,7 @@ struct HabitsTodayView: View {
                         .frame(width: 200, height: 200)
                     )
                     .transition(.opacity)
-                    .zIndex(1)
+                    .zIndex(1000)
             }
             Button(action: {
                 let impactMed = UIImpactFeedbackGenerator(style: .medium)
@@ -119,7 +119,7 @@ struct HabitsTodayView: View {
         // Modal para adicionar novo hábito
         .sheet(isPresented: $isShowingAddHabit) {
             NavigationView {
-                ModalHabitView()
+                ModalHabitView(startDate: selectedDate)
                     .environmentObject(dataStore)
             }
         }

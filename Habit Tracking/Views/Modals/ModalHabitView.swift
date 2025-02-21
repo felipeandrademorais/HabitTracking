@@ -15,7 +15,7 @@ struct ModalHabitView: View {
     @State private var iconName: String
     @State private var showIconPicker: Bool = false
     
-    init(habit: Habit? = nil) {
+    init(habit: Habit? = nil, startDate: Date = Date()) {
         self.habitToEdit = habit
         self.isEdit = habit != nil
         
@@ -31,7 +31,7 @@ struct ModalHabitView: View {
             _cor = State(initialValue: predefinedColors.first ?? .clear)
         }
         
-        _dataInicio = State(initialValue: habit?.dataInicio ?? Date())
+        _dataInicio = State(initialValue: habit?.dataInicio ?? startDate)
         _selectedCycle = State(initialValue: habit?.repeticoes ?? .daily)
         _selectedDays = State(initialValue: habit?.diasDoHabito ?? [1, 2, 3, 4, 5])
         _iconName = State(initialValue: habit?.icon ?? "⭐️")
