@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E4C2DFC2D67551900462DD8 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 1E4C2DFB2D67551900462DD8 /* Lottie */; };
+		1EB7338E2D6CFD6E006926B2 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 1EB7338D2D6CFD6E006926B2 /* MCEmojiPicker */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E4C2DFC2D67551900462DD8 /* Lottie in Frameworks */,
+				1EB7338E2D6CFD6E006926B2 /* MCEmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +79,7 @@
 			name = "Habit Tracking";
 			packageProductDependencies = (
 				1E4C2DFB2D67551900462DD8 /* Lottie */,
+				1EB7338D2D6CFD6E006926B2 /* MCEmojiPicker */,
 			);
 			productName = "Habit Tracking";
 			productReference = 1E240CEE2D27102A00F689B3 /* Habit Tracking.app */;
@@ -109,6 +112,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				1E4C2DFA2D67551900462DD8 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				1EB7338C2D6CFD6E006926B2 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1EEBB66D2D25A3FE00C25FF3;
@@ -368,6 +372,14 @@
 				minimumVersion = 4.5.1;
 			};
 		};
+		1EB7338C2D6CFD6E006926B2 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/izyumkin/MCEmojiPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -375,6 +387,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1E4C2DFA2D67551900462DD8 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		1EB7338D2D6CFD6E006926B2 /* MCEmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1EB7338C2D6CFD6E006926B2 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
+			productName = MCEmojiPicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

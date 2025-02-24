@@ -1,39 +1,53 @@
 import SwiftUI
+import MCEmojiPicker
 
 struct IconPickerView: View {
     @Binding var selectedIcon: String
     @Binding var isPresented: Bool
-
     
-    private let emojis = [
-        "⭐️", "🔥", "💖", "🎉", "🍀",
-        "📚", "💼", "☀️", "🌙", "⚡️",
-        "🚗", "🛒", "🌱", "🐾", "🎁",
-        "🎮", "🏡", "🎵", "✈️", "💪"
-    ]
-
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 70))], spacing: 20) {
-                ForEach(emojis, id: \.self) { emoji in
-                    HStack {
-                        Text(emoji)
-                            .padding()
-                            .font(.system(size: 32))
-                            .background(
-                                Circle()
-                                    .fill(emoji == selectedIcon ? Color.gray.opacity(0.3) : Color.white.opacity(0.001))
-                            )
-                    }
-                    .onTapGesture {
-                        let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                        impactMed.impactOccurred()
-                        selectedIcon = emoji
-                        isPresented = false
+        EmojiPickerWrapper(selectedIcon: $selectedIcon, isPresented: $isPresented)
+            .navigationTitle("Escolha um Emoji")
+    }
+}
+
+struct EmojiPickerWrapper: UIViewControllerRepresentable {
+    @Binding var selectedIcon: String
+    @Binding var isPresented: Bool
+    
+    func makeUIViewController(context: Context) -> MCEmojiPickerViewController {
+        let viewController = MCEmojiPickerViewController()
+        viewController.delegate = context.coordinator
+        viewController.modalPresentationStyle = .pageSheet
+        viewController.isModalInPresentation = false
+        return viewController
+    }
+    
+    func updateUIViewController(_ uiViewController: MCEmojiPickerViewController, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, MCEmojiPickerDelegate {
+        var parent: EmojiPickerWrapper
+        
+        init(_ parent: EmojiPickerWrapper) {
+            self.parent = parent
+        }
+        
+        func didGetEmoji(emoji: String) {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.parent.selectedIcon = emoji
+                if let viewController = self.parent.findViewController() {
+                    viewController.dismiss(animated: true) {
+                        self.parent.isPresented = false
                     }
                 }
+                let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                impactMed.impactOccurred()
             }
-            .padding()
         }
     }
 }
@@ -47,10 +61,25 @@ struct IconPickerView_Previews: PreviewProvider {
 struct IconPickerPreviewWrapper: View {
     @State private var selectedIcon: String = "⭐️"
     @State private var isPresented: Bool = true
-
+    
     var body: some View {
         IconPickerView(selectedIcon: $selectedIcon, isPresented: $isPresented)
+            .frame(height: 400)
             .previewLayout(.sizeThatFits)
-            .padding()
+    }
+}
+
+extension EmojiPickerWrapper {
+    func findViewController() -> UIViewController? {
+        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = scene.windows.first,
+           let rootViewController = window.rootViewController {
+            var currentController = rootViewController
+            while let presentedController = currentController.presentedViewController {
+                currentController = presentedController
+            }
+            return currentController
+        }
+        return nil
     }
 }

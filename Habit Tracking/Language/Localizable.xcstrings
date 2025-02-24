@@ -169,6 +169,22 @@
         }
       }
     },
+    "Escolha um Emoji" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Emoji"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha um Emoji"
+          }
+        }
+      }
+    },
     "Escolher Avatar" : {
       "localizations" : {
         "en" : {
