@@ -20,23 +20,6 @@
         }
       }
     },
-    "A new version of the app is available. Please update to continue using the app." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A new version of the app is available. Please update to continue using the app."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uma nova versão do aplicativo está disponível. Atualize para continuar usando o aplicativo."
-          }
-        }
-      }
-    },
     "Adicionar" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -55,10 +38,36 @@
       }
     },
     "Atividade Anual" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annual Activity"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atividade Anual"
+          }
+        }
+      }
     },
     "Atualizar agora" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Now"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualizar agora"
+          }
+        }
+      }
     },
     "Calendario" : {
       "extractionState" : "manual",
@@ -95,7 +104,36 @@
       }
     },
     "Confirmar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirmar"
+          }
+        }
+      }
+    },
+    "Data de início" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Initial Date"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data de início"
+          }
+        }
+      }
     },
     "Defina o ciclo do seu Hábito" : {
       "extractionState" : "manual",
@@ -132,7 +170,20 @@
       }
     },
     "Escolher Avatar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Avatar"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolher Avatar"
+          }
+        }
+      }
     },
     "Estatísticas" : {
       "extractionState" : "manual",
@@ -219,7 +270,20 @@
       }
     },
     "Nova versão disponível" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New version available"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nova versão disponível"
+          }
+        }
+      }
     },
     "Perfil" : {
       "extractionState" : "manual",
@@ -272,32 +336,17 @@
       }
     },
     "Uma nova versão do aplicativo está disponível. Atualize agora para continuar usando o app." : {
-
-    },
-    "Update Now" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Update Now"
+            "value" : "A new version of the app is available. Update now to continue using the app."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Atualizar Agora"
-          }
-        }
-      }
-    },
-    "Update Required" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Atualização Obrigatória"
+            "value" : "Uma nova versão do aplicativo está disponível. Atualize agora para continuar usando o app."
           }
         }
       }

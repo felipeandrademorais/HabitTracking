@@ -80,6 +80,17 @@ struct ModalHabitView: View {
                 }
                 
                 Section {
+                    DatePicker(
+                        "Data de início",
+                        selection: $dataInicio,
+                        displayedComponents: [.date]
+                    )
+                    .font(Font.custom("Poppins-Regular", size: 14))
+                    .foregroundColor(.fontSoft)
+                    .padding(.vertical, 10)
+                }
+                
+                Section {
                     TaskCycleCardView(
                         selectedCycle: $selectedCycle,
                         selectedDays: $selectedDays
