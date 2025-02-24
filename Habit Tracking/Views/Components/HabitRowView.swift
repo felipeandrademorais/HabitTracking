@@ -7,7 +7,7 @@ struct HabitRowView: View {
     var selectedDate: Date
     var showCheckbox: Bool = true
     var onHabitCompleted: ((Bool) -> Void)? = nil
-
+    
     var body: some View {
         ZStack {
             HStack {
@@ -35,23 +35,21 @@ struct HabitRowView: View {
                             toggleCompletion(for: habit)
                         }
                     ) {
+                        
                         Image(
                             systemName: isCompletedOnSelectedDate
-                                ? "checkmark.circle.fill"
-                                : "circle"
+                            ? "checkmark.circle.fill"
+                            : "circle"
                         )
                         .font(Font.system(size: 24))
                         .foregroundColor(isCompletedOnSelectedDate ? .green : .black)
-                        
                     }
                     .buttonStyle(PlainButtonStyle())
                 } else {
                     if (isCompletedOnSelectedDate) {
-                        Image(
-                            systemName: "checkmark.circle.fill"
-                        )
-                        .foregroundColor(.green)
-                        .font(Font.system(size: 20))
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                            .font(Font.system(size: 24))
                     }
                 }
             }
@@ -59,6 +57,20 @@ struct HabitRowView: View {
             .padding(.vertical, 20)
             .background(Color(habit.cor))
             .cornerRadius(12)
+            .overlay(alignment: .trailing) {
+                if showAnimation {
+                    LottieView(animationName: "Check.json")
+                        .frame(width: 150, height: 150)
+                        .offset(x: 45, y: 0)
+                        .allowsHitTesting(false)
+                        .transition(.scale)
+                }
+            }
+        }
+        .onAppear(){
+            if isCompletedOnSelectedDate {
+                showAnimation = false
+            }
         }
     }
     
@@ -78,6 +90,10 @@ struct HabitRowView: View {
         } else {
             updatedHabit.datesCompleted.append(day)
             onHabitCompleted?(true)
+            showAnimation = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                showAnimation = false
+            }
         }
         
         dataStore.updateHabit(updatedHabit)

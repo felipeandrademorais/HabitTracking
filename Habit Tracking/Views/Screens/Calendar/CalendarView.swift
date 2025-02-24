@@ -4,7 +4,7 @@ struct CalendarView: View {
     @EnvironmentObject var dataStore: HabitDataStore
     @State private var currentMonth: Date = Date()
     @State private var selectedDate: Date = Date()
-
+    
     var body: some View {
         VStack() {
             VStack {
@@ -44,19 +44,19 @@ extension CalendarView {
         }
         .padding()
     }
-
+    
     private var daysOfWeekView: some View {
         let weekDays = Calendar.current.shortWeekdaySymbols
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
-               ForEach(weekDays, id: \.self) { day in
-                   Text(day.capitalized)
-                       .font(Font.custom("Poppins-Thin", size: 12))
-                       .frame(maxWidth: .infinity)
-                       .foregroundColor(.black)
-               }
-           }
+            ForEach(weekDays, id: \.self) { day in
+                Text(day.capitalized)
+                    .font(Font.custom("Poppins-Thin", size: 12))
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(.black)
+            }
+        }
     }
-
+    
     private var daysInMonthView: some View {
         let daysInMonth = generateDaysInMonth(for: currentMonth)
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 10) {
@@ -71,7 +71,7 @@ extension CalendarView {
             }
         }
     }
-
+    
     @ViewBuilder
     private func habitsListView(for date: Date) -> some View {
         let habitsForSelectedDate = dataStore.habits(for: date)
@@ -80,7 +80,7 @@ extension CalendarView {
                 .font(.headline)
                 .foregroundColor(.fontSoft)
                 .padding(.vertical)
-
+            
             if habitsForSelectedDate.isEmpty {
                 Text("Nenhum Hábito para essa data")
                     .foregroundColor(.fontSoft)
@@ -96,6 +96,8 @@ extension CalendarView {
                             )
                         }
                     }
+                    .padding(.top, 10)
+                    .padding(.bottom, 10)
                 }
             }
             
@@ -111,35 +113,35 @@ extension CalendarView {
             let range = Calendar.current.range(of: .day, in: .month, for: date),
             let monthStart = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: date))
         else { return [] }
-
+        
         let firstDayOfMonthWeekday = Calendar.current.component(.weekday, from: monthStart)
         let emptyDays = Array(repeating: nil as Date?, count: firstDayOfMonthWeekday - 1)
-
+        
         let days = range.compactMap { day -> Date? in
             Calendar.current.date(byAdding: .day, value: day - 1, to: monthStart)
         }
-
+        
         return emptyDays + days
     }
-
+    
     private func previousMonth() {
         if let newMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth) {
             currentMonth = newMonth
         }
     }
-
+    
     private func nextMonth() {
         if let newMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth) {
             currentMonth = newMonth
         }
     }
-
+    
     private func formattedDate(_ date: Date, format: String) -> String {
-            let formatter = DateFormatter()
-            formatter.locale = Locale.current
-            formatter.dateFormat = format
-            return formatter.string(from: date)
-        }
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current
+        formatter.dateFormat = format
+        return formatter.string(from: date)
+    }
 }
 
 struct CalendarView_Previews: PreviewProvider {

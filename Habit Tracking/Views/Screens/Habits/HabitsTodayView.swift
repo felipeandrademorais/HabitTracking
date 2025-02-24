@@ -28,21 +28,7 @@ struct HabitsTodayView: View {
                         ForEach(todaysHabits) { habit in
                             HabitRowView(
                                 habit: habit,
-                                selectedDate: selectedDate,
-                                onHabitCompleted: { completed in
-                                    if completed {
-                                        withAnimation(.easeIn(duration: 0.5)) {
-                                            showAnimation = true
-                                        }
-                                        
-                                        // Wait for animation to complete (2s) plus a small delay
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                            withAnimation(.easeOut(duration: 0.5)) {
-                                                showAnimation = false
-                                            }
-                                        }
-                                    }
-                                }
+                                selectedDate: selectedDate
                             )
                             .padding(.vertical, 8)
                             .listRowInsets(EdgeInsets())
@@ -85,25 +71,6 @@ struct HabitsTodayView: View {
                 }
             }
             
-            if showAnimation {
-                Color.black.opacity(0.5)
-                    .ignoresSafeArea()
-                    .overlay(
-                        LottieView(
-                            animationName: "Check.json",
-                            loopMode: .playOnce,
-                            animationSpeed: 1
-                        )
-                        .frame(width: 200, height: 200)
-                    )
-                    .transition(.opacity)
-                    .zIndex(1000)
-                    .onTapGesture {
-                        withAnimation(.easeOut(duration: 0.3)) {
-                            showAnimation = false
-                        }
-                    }
-            }
             Button(action: {
                 let impactMed = UIImpactFeedbackGenerator(style: .medium)
                 impactMed.impactOccurred()

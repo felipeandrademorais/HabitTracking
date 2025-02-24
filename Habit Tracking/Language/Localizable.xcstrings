@@ -21,6 +21,7 @@
       }
     },
     "A new version of the app is available. Please update to continue using the app." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -54,6 +55,9 @@
       }
     },
     "Atividade Anual" : {
+
+    },
+    "Atualizar agora" : {
 
     },
     "Calendario" : {
@@ -214,6 +218,9 @@
         }
       }
     },
+    "Nova versão disponível" : {
+
+    },
     "Perfil" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -264,8 +271,18 @@
         }
       }
     },
+    "Uma nova versão do aplicativo está disponível. Atualize agora para continuar usando o app." : {
+
+    },
     "Update Now" : {
+      "extractionState" : "stale",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Now"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -275,6 +292,7 @@
       }
     },
     "Update Required" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {

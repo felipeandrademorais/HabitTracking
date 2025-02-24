@@ -6,29 +6,43 @@ class VersionChecker: ObservableObject, @unchecked Sendable {
     static let shared = VersionChecker()
     
     @Published var isUpdateAvailable = false
-    private let appStoreId = "YOUR_APP_STORE_ID" // Replace with your app's App Store ID
+    
+    /// Substitua pelo Apple ID real do seu app (obtido no App Store Connect).
+    private let appStoreId = "6741549820"
     
     func checkForUpdate() async {
-        guard let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
-              let url = URL(string: "https://itunes.apple.com/lookup?bundleId=\(Bundle.main.bundleIdentifier ?? "")") else {
+        guard
+            // Versão atual do app (Info.plist -> CFBundleShortVersionString)
+            let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
+            // Consulta ao iTunes Lookup usando o ID do app
+            let url = URL(string: "https://itunes.apple.com/lookup?id=\(appStoreId)")
+        else {
             return
         }
         
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            let json = try JSONDecoder().decode(AppStoreResponse.self, from: data)
+            let response = try JSONDecoder().decode(AppStoreResponse.self, from: data)
             
-            if let appStoreVersion = json.results.first?.version {
-                let isNewer = compareVersions(appStoreVersion, isNewerThan: currentVersion)
-                DispatchQueue.main.async {
-                    self.isUpdateAvailable = isNewer
-                }
+            // Garante que haja pelo menos um resultado na pesquisa
+            guard let firstResult = response.results.first else {
+                print("Não foi possível encontrar o app com o ID informado.")
+                return
             }
+            
+            let appStoreVersion = firstResult.version
+            let isNewer = compareVersions(appStoreVersion, isNewerThan: currentVersion)
+            
+            // Como a classe está em @MainActor, não é necessário DispatchQueue.main.async
+            self.isUpdateAvailable = isNewer
+            
         } catch {
-            print("Error checking for app update: \(error)")
+            print("Erro ao verificar nova versão na App Store: \(error)")
         }
     }
     
+    /// Compara as versões numericamente (ex: "1.2.3") e
+    /// retorna `true` se `version1` for mais recente que `version2`.
     private func compareVersions(_ version1: String, isNewerThan version2: String) -> Bool {
         let v1Components = version1.split(separator: ".")
         let v2Components = version2.split(separator: ".")
@@ -48,13 +62,15 @@ class VersionChecker: ObservableObject, @unchecked Sendable {
         return false
     }
     
+    /// Abre a página do app na App Store para atualização
     func openAppStore() {
         guard let url = URL(string: "https://apps.apple.com/app/id\(appStoreId)") else { return }
         UIApplication.shared.open(url)
     }
 }
 
-// MARK: - App Store Response Models
+// MARK: - Models de resposta da App Store
+
 struct AppStoreResponse: Codable {
     let results: [AppStoreResult]
 }
@@ -63,33 +79,40 @@ struct AppStoreResult: Codable {
     let version: String
 }
 
-// MARK: - Update Alert View
+// MARK: - View do Alerta de Atualização
+
 struct UpdateAlertView: View {
     @ObservedObject private var versionChecker = VersionChecker.shared
     
     var body: some View {
         ZStack {
+            // Se isUpdateAvailable for true, exibe o overlay
             if versionChecker.isUpdateAvailable {
                 Color.black.opacity(0.4)
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 20) {
-                    Text("Update Required")
-                        .font(.title2)
+                    Text("Nova versão disponível")
+                        .font(.custom("Poppins-Regular", size: 18))
+                        .foregroundColor(.fontSoft)
                         .bold()
                     
-                    Text("A new version of the app is available. Please update to continue using the app.")
+                    Text("Uma nova versão do aplicativo está disponível. Atualize agora para continuar usando o app.")
+                        .font(.custom("Poppins-Regular", size: 14))
+                        .foregroundColor(.fontSoft)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
                     
                     Button(action: {
                         versionChecker.openAppStore()
                     }) {
-                        Text("Update Now")
+                        Text("Atualizar agora")
+                            .font(.custom("Poppins-Regular", size: 14))
                             .foregroundColor(.white)
+                            .bold()
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.blue)
+                            .background(Color.default)
                             .cornerRadius(10)
                     }
                     .padding(.horizontal)
@@ -101,6 +124,7 @@ struct UpdateAlertView: View {
             }
         }
         .task {
+            // Ao aparecer a View, faz a verificação de versão
             await versionChecker.checkForUpdate()
         }
     }

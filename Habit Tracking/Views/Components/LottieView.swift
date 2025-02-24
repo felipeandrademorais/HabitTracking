@@ -32,10 +32,18 @@ struct LottieView: UIViewRepresentable {
             animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
         
-        animationView.play()
+        animationView.play { _ in
+            triggerHapticFeedback()
+        }
         
         return view
     }
     
     func updateUIView(_ uiView: UIView, context: Context) {}
+    
+    private func triggerHapticFeedback() {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.prepare()
+        generator.impactOccurred()
+    }
 }

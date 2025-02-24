@@ -87,6 +87,7 @@ class HabitDataStore: ObservableObject {
         
         let activeHabits = habits.filter {
             Calendar.current.startOfDay(for: $0.dataInicio) <= startOfSelectedDate
+            && $0.diasDoHabito.contains(Calendar.current.component(.weekday, from: startOfSelectedDate))
         }
         
         let totalHabits = activeHabits.count
@@ -102,7 +103,7 @@ extension HabitDataStore {
         store.habits = [
             Habit(
                 nome: "Read",
-                cor: "Color1",
+                cor: "color1",
                 dataInicio: Date().addingTimeInterval(-86400),
                 repeticoes: .daily,
                 datesCompleted: [],
@@ -110,7 +111,7 @@ extension HabitDataStore {
             ),
             Habit(
                 nome: "Exercise",
-                cor: "Color2",
+                cor: "color2",
                 dataInicio: Date(),
                 repeticoes: .daily,
                 datesCompleted: [],
