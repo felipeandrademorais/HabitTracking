@@ -35,9 +35,13 @@ class HabitDataStore: ObservableObject {
 
     func updateHabit(_ habit: Habit) {
         if let index = habits.firstIndex(where: { $0.id == habit.id }) {
-            habits[index] = habit
-            saveHabits()
-        }
+                habits[index].nome = habit.nome
+                habits[index].cor = habit.cor
+                habits[index].dataInicio = habit.dataInicio
+                habits[index].repeticoes = habit.repeticoes
+                habits[index].diasDoHabito = habit.diasDoHabito
+                habits[index].icon = habit.icon
+            }
     }
     
     func habits(for date: Date) -> [Habit] {
