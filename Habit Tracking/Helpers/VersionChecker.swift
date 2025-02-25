@@ -15,7 +15,7 @@ class VersionChecker: ObservableObject, @unchecked Sendable {
             // Versão atual do app (Info.plist -> CFBundleShortVersionString)
             let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
             // Consulta ao iTunes Lookup usando o ID do app
-            let url = URL(string: "https://itunes.apple.com/lookup?id=\(appStoreId)")
+            let url = URL(string: "https://itunes.apple.com/lookup?id=\(appStoreId)&country=br")
         else {
             return
         }
