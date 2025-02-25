@@ -12,10 +12,10 @@ class HabitDataStore: ObservableObject {
     func loadHabits() {
         guard let data = UserDefaults.standard.data(forKey: habitsKey) else { return }
         do {
-            let decoded = try JSONDecoder().decode([Habit].self, from: data)
+            let decoded = try Migration.migrateIfNeeded(data)
             self.habits = decoded
         } catch {
-            print("Erro ao decodificar habits: \(error)")
+            print("Error decoding habits: \(error)")
         }
     }
 
@@ -24,7 +24,7 @@ class HabitDataStore: ObservableObject {
             let encoded = try JSONEncoder().encode(habits)
             UserDefaults.standard.set(encoded, forKey: habitsKey)
         } catch {
-            print("Erro ao codificar habits: \(error)")
+            print("Error encoding habits: \(error)")
         }
     }
 
