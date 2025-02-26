@@ -9,6 +9,8 @@ struct Habit: Identifiable, Codable {
     var diasDoHabito: [Int]
     var datesCompleted: [Date]
     var icon: String
+    var notificationsEnabled: Bool
+    var notificationTime: Date?
 
     init(
         id: UUID = UUID(),
@@ -18,7 +20,9 @@ struct Habit: Identifiable, Codable {
         repeticoes: Repeticao,
         diasDoHabito: [Int] = [],
         datesCompleted: [Date] = [],
-        icon: String
+        icon: String,
+        notificationsEnabled: Bool = false,
+        notificationTime: Date? = nil
     ) {
         self.id = id
         self.nome = nome
@@ -28,6 +32,8 @@ struct Habit: Identifiable, Codable {
         self.diasDoHabito = diasDoHabito
         self.datesCompleted = datesCompleted
         self.icon = icon
+        self.notificationsEnabled = notificationsEnabled
+        self.notificationTime = notificationTime
     }
     
     func isCompleted(on date: Date) -> Bool {

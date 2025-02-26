@@ -218,6 +218,9 @@
         }
       }
     },
+    "Habilitar Notificações" : {
+
+    },
     "Habitos" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -234,6 +237,9 @@
           }
         }
       }
+    },
+    "Horário da Notificação" : {
+
     },
     "Medalhas" : {
       "extractionState" : "manual",

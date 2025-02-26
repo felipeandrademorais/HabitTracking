@@ -31,6 +31,22 @@ class HabitDataStore: ObservableObject {
     func addHabit(_ habit: Habit) {
         habits.append(habit)
         saveHabits()
+        if habit.notificationsEnabled {
+            NotificationManager.shared.scheduleNotification(for: habit) { success, error in
+                if !success, let errorMessage = error {
+                    NotificationCenter.default.post(
+                        name: NSNotification.Name("ShowNotificationError"),
+                        object: nil,
+                        userInfo: ["message": errorMessage]
+                    )
+                } else if success {
+                    NotificationCenter.default.post(
+                        name: NSNotification.Name("ShowNotificationSuccess"),
+                        object: nil
+                    )
+                }
+            }
+        }
     }
 
     func updateHabit(_ habit: Habit) {
@@ -41,11 +57,31 @@ class HabitDataStore: ObservableObject {
             habits[index].repeticoes = habit.repeticoes
             habits[index].diasDoHabito = habit.diasDoHabito
             habits[index].icon = habit.icon
+            habits[index].notificationsEnabled = habit.notificationsEnabled
+            habits[index].notificationTime = habit.notificationTime
             if !habit.datesCompleted.isEmpty {
                 habits[index].datesCompleted = habit.datesCompleted
             }
 
             saveHabits()
+            if habit.notificationsEnabled {
+                NotificationManager.shared.scheduleNotification(for: habit) { success, error in
+                    if !success, let errorMessage = error {
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name("ShowNotificationError"),
+                            object: nil,
+                            userInfo: ["message": errorMessage]
+                        )
+                    } else if success {
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name("ShowNotificationSuccess"),
+                            object: nil
+                        )
+                    }
+                }
+            } else {
+                NotificationManager.shared.removeNotifications(for: habit)
+            }
         }
     }
     
@@ -76,6 +112,7 @@ class HabitDataStore: ObservableObject {
     func removeHabit(_ habit: Habit) {
         habits.removeAll { $0.id == habit.id }
         saveHabits()
+        NotificationManager.shared.removeNotifications(for: habit)
     }
     
     func debugClearAllData() {

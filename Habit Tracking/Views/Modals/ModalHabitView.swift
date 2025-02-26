@@ -14,6 +14,8 @@ struct ModalHabitView: View {
     @State private var selectedDays: [Int]
     @State private var iconName: String
     @State private var showIconPicker: Bool = false
+    @State private var notificationsEnabled: Bool = false
+    @State private var notificationTime: Date = Date()
     
     init(habit: Habit? = nil, startDate: Date = Date()) {
         self.habitToEdit = habit
@@ -26,6 +28,10 @@ struct ModalHabitView: View {
                 _cor = State(initialValue: predefinedColors[index])
             } else {
                 _cor = State(initialValue: predefinedColors.first ?? .clear)
+            }
+            _notificationsEnabled = State(initialValue: habit.notificationsEnabled)
+            if let notificationTime = habit.notificationTime {
+                _notificationTime = State(initialValue: notificationTime)
             }
         } else {
             _cor = State(initialValue: predefinedColors.first ?? .clear)
@@ -99,10 +105,7 @@ struct ModalHabitView: View {
                 }
                 
                 Section {
-                    LazyHGrid(
-                        rows: [GridItem(.fixed(40), spacing: 20)],
-                        spacing: 20
-                    ) {
+                    LazyHGrid(rows: [GridItem(.fixed(40), spacing: 20)], spacing: 20) {
                         ForEach(predefinedColors, id: \.self) { color in
                             ColorCircleSelector(
                                 color: color,
@@ -116,6 +119,33 @@ struct ModalHabitView: View {
                     .padding()
                 }
                 .listRowBackground(Color.white.opacity(0.001))
+                
+                Section {
+                    Toggle(isOn: $notificationsEnabled) {
+                        Text("Habilitar Notificações")
+                            .font(Font.custom("Poppins-Regular", size: 14))
+                            .foregroundColor(.fontSoft)
+                    }
+                    .onChange(of: notificationsEnabled) { oldValue, newValue in
+                        if newValue {
+                            UNUserNotificationCenter.current().getNotificationSettings { settings in
+                                if settings.authorizationStatus != .authorized {
+                                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+                                }
+                            }
+                        }
+                    }
+                    
+                    if notificationsEnabled {
+                        DatePicker(
+                            "Horário da Notificação",
+                            selection: $notificationTime,
+                            displayedComponents: [.hourAndMinute]
+                        )
+                        .font(Font.custom("Poppins-Regular", size: 14))
+                        .foregroundColor(.fontSoft)
+                    }
+                }
                 
                 Button(action: addOrUpdateHabit) {
                     Text(isEdit ? "Salvar" : "Adicionar")
@@ -143,7 +173,9 @@ struct ModalHabitView: View {
                 dataInicio: dataInicio,
                 repeticoes: selectedCycle,
                 diasDoHabito: selectedDays,
-                icon: iconName
+                icon: iconName,
+                notificationsEnabled: notificationsEnabled,
+                notificationTime: notificationsEnabled ? notificationTime : nil
             )
             dataStore.updateHabit(updatedHabit)
         } else {
@@ -153,7 +185,9 @@ struct ModalHabitView: View {
                 dataInicio: dataInicio,
                 repeticoes: selectedCycle,
                 diasDoHabito: selectedDays,
-                icon: iconName
+                icon: iconName,
+                notificationsEnabled: notificationsEnabled,
+                notificationTime: notificationsEnabled ? notificationTime : nil
             )
             dataStore.addHabit(newHabit)
         }
